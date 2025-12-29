@@ -21,7 +21,7 @@ const Sidebar = () => {
         {/* Logo/Brand Section */}
         <div className="h-16 flex items-center justify-center px-4 bg-linear-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-900">
           <h1 className="text-xl font-bold bg-linear-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
-            Perish Church
+            Sahili Church
           </h1>
         </div>
 
@@ -47,7 +47,7 @@ const Sidebar = () => {
         {/* Footer Section */}
         <div className="p-4 border-t border-slate-200 dark:border-slate-800">
           <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
-            © 2024 Perish Church
+            © 2026 Perish Church
           </p>
         </div>
       </div>
