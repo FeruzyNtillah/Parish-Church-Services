@@ -16,11 +16,11 @@ const navItems: NavItem[] = [
 
 const Sidebar = () => {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-sm z-40">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shadow-sm z-40">
       <div className="flex flex-col h-full">
         {/* Logo/Brand Section */}
-        <div className="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-800 px-4">
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+        <div className="h-16 flex items-center justify-center border-b border-slate-200 dark:border-slate-800 px-4 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-900">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
             Perish Church
           </h1>
         </div>
@@ -33,18 +33,20 @@ const Sidebar = () => {
               <a
                 key={item.path}
                 href={item.path}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 group"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all duration-200 group hover:shadow-sm"
               >
-                <Icon className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
-                <span className="font-medium">{item.label}</span>
+                <Icon className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
+                <span className="font-medium group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {item.label}
+                </span>
               </a>
             );
           })}
         </nav>
 
         {/* Footer Section */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+          <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
             © 2024 Perish Church
           </p>
         </div>
@@ -54,4 +56,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
