@@ -1,4 +1,4 @@
-import { Bell, User, Settings, Sun, Moon } from 'lucide-react';
+import { Bell, User, Settings, Sun, Moon, Church } from 'lucide-react';
 import { useTheme } from '../../contexts/themeStore';
 
 const Topbar = () => {
@@ -10,7 +10,7 @@ const Topbar = () => {
         {/* Left Section - Can be used for breadcrumbs or title */}
         <div className="flex items-center">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-            Dashboard
+            <Church className="w-6 h-6" aria-hidden="true" />
           </h2>
         </div>
 
