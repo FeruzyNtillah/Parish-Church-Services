@@ -19,8 +19,8 @@ const Sidebar = () => {
     <aside className="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shadow-sm z-40">
       <div className="flex flex-col h-full">
         {/* Logo/Brand Section */}
-        <div className="h-16 flex items-center justify-center border-b border-slate-200 dark:border-slate-800 px-4 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-900">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
+        <div className="h-16 flex items-center justify-center border-b border-slate-200 dark:border-slate-800 px-4 bg-linear-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-900">
+          <h1 className="text-xl font-bold bg-linear-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
             Perish Church
           </h1>
         </div>

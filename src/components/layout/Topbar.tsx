@@ -1,5 +1,5 @@
 import { Bell, User, Settings, Sun, Moon } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '../../contexts/themeStore';
 
 const Topbar = () => {
   const { theme, toggleTheme } = useTheme();
