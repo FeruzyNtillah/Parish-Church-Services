@@ -7,10 +7,10 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-background">
       <Sidebar />
       <Topbar />
-      <main className="ml-64 mt-16 p-6 border-l border-slate-200 dark:border-slate-800">
+      <main className="ml-64 mt-16 p-6 border-l border-border">
         {children}
       </main>
     </div>

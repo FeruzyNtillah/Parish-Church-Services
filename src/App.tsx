@@ -6,10 +6,10 @@ function App() {
     <ThemeProvider>
       <MainLayout>
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            Welcome to Perish Church
+          <h1 className="text-3xl font-bold text-foreground mb-4">
+            Welcome to Sahili Church
           </h1>
-          <p className="text-slate-600 dark:text-slate-400">
+          <p className="text-muted-foreground">
             Your content goes here...
           </p>
         </div>
