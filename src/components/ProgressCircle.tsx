@@ -1,4 +1,5 @@
 import './ProgressCircle.css';
+import { useEffect, useRef } from 'react';
 
 interface ProgressCircleProps {
   progress?: number;
@@ -13,14 +14,23 @@ const ProgressCircle = ({
   color = "#10b981",
   backgroundColor = "#e5e7eb"
 }: ProgressCircleProps) => {
+  const divRef = useRef<HTMLDivElement>(null);
   const radius = size / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress * circumference);
 
+  useEffect(() => {
+    if (divRef.current) {
+      divRef.current.style.setProperty('--size', `${size}px`);
+      divRef.current.style.setProperty('--color', color);
+      divRef.current.style.setProperty('--bg-color', backgroundColor);
+    }
+  }, [size, color, backgroundColor]);
+
   return (
     <div 
-      className="progress-circle" 
-      style={{ '--size': `${size}px`, '--color': color, '--bg-color': backgroundColor } as React.CSSProperties}
+      ref={divRef}
+      className="progress-circle"
     >
       <svg 
         width={size} 
