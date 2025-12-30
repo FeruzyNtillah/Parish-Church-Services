@@ -11,6 +11,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import ProgressCircle from '../components/ProgressCircle';
+import './Home.css';
 
 const parishes = [
   { id: 1, name: "Parokia ya Bikira Maria Mama wa Rozari Takatifu - Makongo Juu" },
@@ -84,11 +85,11 @@ const Home = () => {
           <select
             value={selectedParish}
             onChange={handleParishChange}
-            className="min-w-55 px-4 py-2 pr-10 bg-card border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="min-w-55 px-4 py-2 pr-10 bg-card dark:bg-slate-900 border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground dark:text-slate-100 parish-select"
             aria-label="Select parish"
           >
             {parishes.map((parish) => (
-              <option key={parish.id} value={parish.id}>
+              <option key={parish.id} value={parish.id} className="dark:bg-slate-900 dark:text-slate-100">
                 {parish.name}
               </option>
             ))}
