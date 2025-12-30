@@ -56,3 +56,18 @@
     color: hsl(var(--foreground));
   }
 }
+
+@layer utilities {
+  .progress-circle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .progress-text {
+    position: absolute;
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+}

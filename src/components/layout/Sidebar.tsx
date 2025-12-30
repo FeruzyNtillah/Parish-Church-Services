@@ -1,4 +1,5 @@
 import { Home, Info, Briefcase, Calendar, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface NavItem {
   label: string;
@@ -30,16 +31,16 @@ const Sidebar = () => {
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
-              <a
+              <Link
                 key={item.path}
-                href={item.path}
+                to={item.path}
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:bg-emerald-50 dark:hover:bg-emerald-950 transition-all duration-200 group hover:shadow-sm"
               >
                 <Icon className="w-5 h-5 text-muted-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
                 <span className="font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                   {item.label}
                 </span>
-              </a>
+              </Link>
             );
           })}
         </nav>
