@@ -20,7 +20,7 @@ const Sidebar = () => {
     <aside className="fixed left-0 top-0 h-screen w-64 bg-card shadow-sm z-40 border-r border-border">
       <div className="flex flex-col h-full">
         {/* Logo/Brand Section */}
-        <div className="h-16 flex items-center justify-center px-4 bg-linear-to-r from-emerald-50 to-emerald-100 dark:from-emerald-950 dark:to-emerald-900">
+        <div className="h-16 flex items-center justify-center px-4">
           <h1 className="text-xl font-bold bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent">
             Sahili Church
           </h1>
