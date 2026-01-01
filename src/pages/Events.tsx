@@ -56,7 +56,7 @@ const Events = () => {
         <div className="overflow-x-auto">
           <table className="w-full">
             {/* Table Head */}
-            <thead className="bg-muted border-b border-border">
+            <thead className="bg-emerald-50 dark:bg-emerald-950/30 border-b border-emerald-200 dark:border-emerald-800">
               <tr>
                 <th className="px-6 py-4 text-left">
                   <button
