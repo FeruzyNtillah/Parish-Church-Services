@@ -1,4 +1,3 @@
-import './ProgressCircle.css';
 import { useEffect, useRef } from 'react';
 
 interface ProgressCircleProps {
