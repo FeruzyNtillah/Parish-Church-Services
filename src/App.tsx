@@ -3,6 +3,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './components/layout/Main-layout';
 import Home from './pages/Home';
 import Events from './pages/Events';
+import Sermons from './pages/Sermons';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/sermons" element={<Sermons />} />
           </Routes>
         </MainLayout>
       </Router>
