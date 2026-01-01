@@ -80,4 +80,26 @@
   .parish-select {
     color-scheme: light dark;
   }
+
+  .parish-select option {
+    background-color: #065f46;
+    color: white;
+  }
+
+  .parish-select option:checked {
+    background: linear-gradient(#065f46, #065f46);
+    background-color: #065f46;
+    color: white;
+  }
+
+  .dark .parish-select option {
+    background-color: #034e3b;
+    color: white;
+  }
+
+  .dark .parish-select option:checked {
+    background: linear-gradient(#034e3b, #034e3b);
+    background-color: #034e3b;
+    color: white;
+  }
 }
