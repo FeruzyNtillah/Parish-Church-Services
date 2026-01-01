@@ -176,7 +176,7 @@ const Home = () => {
         {/* Events Section */}
         <div className="lg:col-span-1">
           <div className="bg-card shadow-sm rounded-lg overflow-hidden">
-            <div className="bg-emerald-100 dark:bg-emerald-950 p-4 border-b border-emerald-200 dark:border-emerald-800">
+            <div className="bg-emerald-100 dark:bg-emerald-700 p-4 border-b border-emerald-200 dark:border-emerald-600">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5 text-emerald-600" />
                 <h3 className="text-lg font-semibold text-white">
