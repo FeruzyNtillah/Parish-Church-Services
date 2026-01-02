@@ -1,4 +1,4 @@
-import { Home, CalendarCheck, BookOpen, Calendar, Target } from 'lucide-react';
+import { Home, CalendarCheck, BookOpen, Heart, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NavItem {
@@ -11,7 +11,7 @@ const navItems: NavItem[] = [
   { label: 'Home', icon: Home, path: '/' },
   { label: 'Events', icon: CalendarCheck, path: '/events' },
   { label: 'Sermons', icon: BookOpen, path: '/sermons' },
-  { label: 'Sessions', icon: Calendar, path: '/sessions' },
+  { label: 'Donations', icon: Heart, path: '/donations' },
   { label: 'Mission', icon: Target, path: '/mission' },
 ];
 
