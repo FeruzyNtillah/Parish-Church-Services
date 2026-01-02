@@ -97,9 +97,9 @@ const FamilyPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 text-foreground">
         {families.map((f) => (
-          <div key={f.id} className="flex items-center justify-between p-4 bg-white dark:bg-card rounded shadow-sm border">
+          <div key={f.id} className="flex items-center justify-between p-4 bg-card text-card-foreground rounded shadow-sm border">
             <div>
               <div className="text-lg font-medium">{f.familyName}</div>
               <div className="text-sm text-muted-foreground">Members: {getMemberCount(f.id)}</div>
@@ -125,9 +125,9 @@ const FamilyPage: React.FC = () => {
       </div>
 
       {/* Add Family Modal */}
-      {showAddFamily && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-          <div className="w-full max-w-md bg-white dark:bg-card p-6 rounded shadow">
+        {showAddFamily && (
+        <div className="fixed inset-0 bg-card text-card-foreground flex items-center justify-center z-50">
+          <div className="w-full max-w-md bg-card text-card-foreground p-6 rounded shadow-xl ring-1 ring-border">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Add Family</h3>
               <button onClick={() => setShowAddFamily(false)} className="p-1 rounded" aria-label="Close add family modal" title="Close">
@@ -152,7 +152,7 @@ const FamilyPage: React.FC = () => {
 
       {/* Family Details Drawer / Modal */}
       {selectedFamily && (
-        <div className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-white dark:bg-card z-50 overflow-auto p-6 border-l">
+        <div className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-card text-card-foreground z-50 overflow-auto p-6 border-l">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-2xl font-semibold">{selectedFamily.familyName}</h3>
@@ -197,8 +197,8 @@ const FamilyPage: React.FC = () => {
 
           {/* Add Member Modal inside details */}
           {showAddMember && (
-            <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-60">
-              <div className="w-full max-w-md bg-white dark:bg-card p-6 rounded shadow">
+            <div className="fixed inset-0 bg-card text-card-foreground flex items-center justify-center z-60">
+              <div className="w-full max-w-md bg-card text-card-foreground p-6 rounded shadow-xl ring-1 ring-border">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-lg font-semibold">Add Family Member</h4>
                   <button onClick={() => setShowAddMember(false)} className="p-1 rounded" aria-label="Close add member modal" title="Close">
