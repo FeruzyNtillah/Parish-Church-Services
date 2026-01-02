@@ -1,8 +1,8 @@
-import { Home, CalendarCheck, BookOpen, Heart, Target } from 'lucide-react';
+import { Home, CalendarCheck, BookOpen, Heart, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NavItem {
-  label: string;
+  label?: string;
   icon: React.ComponentType<{ className?: string }>;
   path: string;
 }
@@ -12,7 +12,8 @@ const navItems: NavItem[] = [
   { label: 'Events', icon: CalendarCheck, path: '/events' },
   { label: 'Sermons', icon: BookOpen, path: '/sermons' },
   { label: 'Donations', icon: Heart, path: '/donations' },
-  { label: 'Mission', icon: Target, path: '/mission' },
+  // Families nav item (icon + label) routing to /family
+  { label: 'Family', icon: Users, path: '/family' },
 ];
 
 const Sidebar = () => {
@@ -37,9 +38,11 @@ const Sidebar = () => {
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:bg-emerald-50 dark:hover:bg-emerald-950 transition-all duration-200 group hover:shadow-sm"
               >
                 <Icon className="w-5 h-5 text-muted-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
-                <span className="font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                  {item.label}
-                </span>
+                {item.label && (
+                  <span className="font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    {item.label}
+                  </span>
+                )}
               </Link>
             );
           })}

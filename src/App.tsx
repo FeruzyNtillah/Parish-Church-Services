@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Events from './pages/Events';
 import Sermons from './pages/Sermons';
 import Donations from './pages/Donations';
+import Family from './pages/Family';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/events" element={<Events />} />
             <Route path="/sermons" element={<Sermons />} />
             <Route path="/donations" element={<Donations />} />
+            <Route path="/family" element={<Family />} />
           </Routes>
         </MainLayout>
       </Router>

@@ -42,3 +42,46 @@ export const donationsData: Donation[] = [
   { id: 'DON1009', donorName: 'Robert Johnson', amount: 120, date: '2023-03-12', paymentMethod: 'Credit Card', purpose: 'Tithes' },
   { id: 'DON1010', donorName: 'Emily Davis', amount: 90, date: '2023-03-20', paymentMethod: 'Bank Transfer', purpose: 'Offering' },
 ];
+
+// --- Members and Families Mock Data ---
+export interface Member {
+  id: string;
+  fullName: string;
+  phone?: string;
+  gender?: 'Male' | 'Female' | 'Other';
+  [key: string]: unknown;
+}
+
+export interface Family {
+  id: string;
+  familyName: string;
+  createdAt: string;
+}
+
+export interface FamilyMember {
+  id: string;
+  familyId: string;
+  memberId: string;
+  role: string; // Father, Mother, Child, Guardian, etc.
+  addedAt: string;
+}
+
+export const membersData: Member[] = [
+  { id: 'MBR1001', fullName: 'John Mwakalinga', phone: '+255700000001', gender: 'Male' },
+  { id: 'MBR1002', fullName: 'Mary Mwakalinga', phone: '+255700000002', gender: 'Female' },
+  { id: 'MBR1003', fullName: 'David Mwakalinga', phone: '+255700000003', gender: 'Male' },
+  { id: 'MBR1004', fullName: 'Alice Ngoma', phone: '+255700000004', gender: 'Female' },
+  { id: 'MBR1005', fullName: 'Peter Kim', phone: '+255700000005', gender: 'Male' },
+];
+
+export const familiesData: Family[] = [
+  { id: 'FAM1001', familyName: 'Mwakalinga Family', createdAt: '2024-06-01' },
+  { id: 'FAM1002', familyName: 'Ngoma Family', createdAt: '2024-07-12' },
+];
+
+export const familyMembersData: FamilyMember[] = [
+  { id: 'FM1001', familyId: 'FAM1001', memberId: 'MBR1001', role: 'Father', addedAt: '2024-06-02' },
+  { id: 'FM1002', familyId: 'FAM1001', memberId: 'MBR1002', role: 'Mother', addedAt: '2024-06-02' },
+  { id: 'FM1003', familyId: 'FAM1001', memberId: 'MBR1003', role: 'Child', addedAt: '2024-06-02' },
+  { id: 'FM1004', familyId: 'FAM1002', memberId: 'MBR1004', role: 'Mother', addedAt: '2024-07-13' },
+];
