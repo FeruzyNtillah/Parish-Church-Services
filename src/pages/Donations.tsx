@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowUpDown } from 'lucide-react';
-import { donationsData, type Donation } from './Data';
+import { donationsData } from '../data';
+import type { Donation } from '../types';
 
 type SortField = keyof Donation;
 type SortOrder = 'asc' | 'desc';

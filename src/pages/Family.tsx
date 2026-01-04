@@ -11,14 +11,14 @@ import {
   Home,
   ChevronLeft,
   ChevronRight,
-  Eye,
+  Eye
 } from 'lucide-react';
 import {
   membersData,
   familiesData as initialFamilies,
   familyMembersData as initialFamilyMembers,
-} from './Data';
-import type { Member, Family, FamilyMember } from './Data';
+} from '../data';
+import type { Member, Family, FamilyMember } from '../types';
 
 const roleOptions = ['Father', 'Mother', 'Child', 'Guardian', 'Other'];
 

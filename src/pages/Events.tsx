@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowUpDown, Calendar, MapPin, Clock, Tag } from 'lucide-react';
-import { eventsData, type Event } from './Data';
+import { eventsData } from '../data';
+import type { Event } from '../types';
 
 type SortKey = keyof Event;
 

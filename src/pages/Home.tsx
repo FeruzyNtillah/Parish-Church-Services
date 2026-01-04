@@ -10,7 +10,7 @@ import {
   Church,
   ChevronDown
 } from 'lucide-react';
-import ProgressCircle from '../components/ProgressCircle';
+import ProgressCircle from '../components/ui/ProgressCircle';
 
 const parishes = [
   { id: 1, name: "Parokia ya Bikira Maria Mama wa Rozari Takatifu - Makongo Juu" },
