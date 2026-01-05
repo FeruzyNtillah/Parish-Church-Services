@@ -361,6 +361,8 @@ const FamilyPage: React.FC = () => {
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
               className="p-2 rounded-lg border border-border hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Previous page"
+              title="Previous page"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -371,6 +373,8 @@ const FamilyPage: React.FC = () => {
               onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
               className="p-2 rounded-lg border border-border hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Next page"
+              title="Next page"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
