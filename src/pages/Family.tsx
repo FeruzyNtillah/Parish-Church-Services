@@ -48,7 +48,9 @@ const FamilyPage: React.FC = () => {
     return map;
   }, []);
 
-  const getMemberCount = (familyId: string) => familyMembers.filter((fm) => fm.familyId === familyId).length;
+  const getMemberCount = useMemo(() => {
+    return (familyId: string) => familyMembers.filter((fm) => fm.familyId === familyId).length;
+  }, [familyMembers]);
 
   // Dashboard statistics
   const statistics = useMemo(() => {
@@ -72,7 +74,7 @@ const FamilyPage: React.FC = () => {
 
   // Filtered and sorted families
   const filteredAndSortedFamilies = useMemo(() => {
-    let filtered = families.filter(family =>
+    const filtered = families.filter(family =>
       family.familyName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -96,7 +98,7 @@ const FamilyPage: React.FC = () => {
     });
 
     return filtered;
-  }, [families, searchQuery, sortBy, sortOrder]);
+  }, [families, searchQuery, sortBy, sortOrder, getMemberCount]);
 
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedFamilies.length / familiesPerPage);
