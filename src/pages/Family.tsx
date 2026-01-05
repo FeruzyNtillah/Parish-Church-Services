@@ -409,24 +409,24 @@ const FamilyPage: React.FC = () => {
           <div className="fixed inset-0 bg-black/70 z-40 backdrop-blur-sm" onClick={() => setShowAddFamily(false)}></div>
           
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="w-full max-w-md bg-card text-foreground p-6 rounded shadow-xl ring-1 ring-border">
+            <div className="w-full max-w-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-6 rounded-lg shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Add Family</h3>
-                <button onClick={() => setShowAddFamily(false)} className="p-1 rounded hover:bg-accent" aria-label="Close add family modal" title="Close">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Add Family</h3>
+                <button onClick={() => setShowAddFamily(false)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Close add family modal" title="Close">
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              <label htmlFor="family-name-input" className="block mb-2 text-sm font-medium">Family Name</label>
+              <label htmlFor="family-name-input" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Family Name</label>
               <input
                 id="family-name-input"
                 value={newFamilyName}
                 onChange={(e) => setNewFamilyName(e.target.value)}
-                className="w-full px-3 py-2 border border-input rounded mb-4 bg-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                 placeholder="e.g. Mwakalinga Family"
               />
               <div className="flex justify-end gap-2">
-                <button onClick={() => setShowAddFamily(false)} className="px-3 py-2 rounded border border-border hover:bg-accent transition-colors">Cancel</button>
-                <button onClick={createFamily} className="px-3 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">Save</button>
+                <button onClick={() => setShowAddFamily(false)} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors">Cancel</button>
+                <button onClick={createFamily} className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">Save</button>
               </div>
             </div>
           </div>
@@ -440,40 +440,40 @@ const FamilyPage: React.FC = () => {
           <div className="fixed inset-0 bg-black/70 z-40 backdrop-blur-sm" onClick={() => setSelectedFamily(null)}></div>
           
           {/* Drawer */}
-          <div className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-card text-foreground z-50 overflow-auto p-6 border-l border-border shadow-2xl">
+          <div className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white z-50 overflow-auto p-6 border-l border-gray-200 dark:border-gray-700 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-2xl font-semibold">{selectedFamily.familyName}</h3>
-                <div className="text-sm text-muted-foreground">Created: {selectedFamily.createdAt}</div>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{selectedFamily.familyName}</h3>
+                <div className="text-sm text-gray-500 dark:text-gray-400">Created: {selectedFamily.createdAt}</div>
               </div>
               <div className="flex items-center gap-2">
                 <button onClick={() => setShowAddMember(true)} className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">
                   <UserPlus className="w-4 h-4" /> Add Family Member
                 </button>
-                <button onClick={() => setSelectedFamily(null)} className="p-2 rounded border border-border hover:bg-accent transition-colors">
+                <button onClick={() => setSelectedFamily(null)} className="p-2 rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors">
                   Close
                 </button>
               </div>
             </div>
 
             <div>
-              <h4 className="font-medium mb-2">Members</h4>
+              <h4 className="font-medium mb-2 text-gray-900 dark:text-white">Members</h4>
               <div className="space-y-2">
                 {familyMembers.filter((fm) => fm.familyId === selectedFamily.id).length === 0 && (
-                  <div className="text-sm text-muted-foreground">No members added yet.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">No members added yet.</div>
                 )}
                 {familyMembers
                   .filter((fm) => fm.familyId === selectedFamily.id)
                   .map((fm) => {
                     const m = membersById.get(fm.memberId);
                     return (
-                      <div key={fm.id} className="flex items-center justify-between p-3 border border-border rounded">
+                      <div key={fm.id} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700">
                         <div>
-                          <div className="font-medium">{m?.fullName}</div>
-                          <div className="text-sm text-muted-foreground">{fm.role} • {m?.phone}</div>
+                          <div className="font-medium text-gray-900 dark:text-white">{m?.fullName}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{fm.role} • {m?.phone}</div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <button onClick={() => removeMember(fm.id)} className="p-2 rounded text-destructive border border-border hover:bg-destructive/10 transition-colors" aria-label={`Remove ${m?.fullName} from family`} title="Remove member">
+                          <button onClick={() => removeMember(fm.id)} className="p-2 rounded text-red-600 dark:text-red-400 border border-gray-300 dark:border-gray-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" aria-label={`Remove ${m?.fullName} from family`} title="Remove member">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -490,50 +490,50 @@ const FamilyPage: React.FC = () => {
                 <div className="fixed inset-0 bg-black/70 z-50 backdrop-blur-sm" onClick={() => setShowAddMember(false)}></div>
                 
                 <div className="fixed inset-0 flex items-center justify-center z-60">
-                  <div className="w-full max-w-md bg-card text-foreground p-6 rounded shadow-xl ring-1 ring-border">
+                  <div className="w-full max-w-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-6 rounded-lg shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700 border border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-lg font-semibold">Add Family Member</h4>
-                      <button onClick={() => setShowAddMember(false)} className="p-1 rounded hover:bg-accent" aria-label="Close add member modal" title="Close">
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Add Family Member</h4>
+                      <button onClick={() => setShowAddMember(false)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Close add member modal" title="Close">
                         <X className="w-5 h-5" />
                       </button>
                     </div>
 
-                    <label className="block text-sm font-medium mb-1">Search member</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Search member</label>
                     <div className="flex items-center gap-2 mb-3">
-                      <Search className="w-4 h-4 text-muted-foreground" aria-hidden />
+                      <Search className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden />
                       <input
                         id="member-search-input"
                         value={memberQuery}
                         onChange={(e) => setMemberQuery(e.target.value)}
                         placeholder="Type name or phone"
-                        className="w-full px-2 py-1 border border-input rounded bg-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                         aria-label="Search member by name or phone"
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label className="block text-sm font-medium mb-1">Select Member</label>
-                      <div className="max-h-40 overflow-auto border border-border rounded">
-                        {filteredMembers.length === 0 && <div className="p-2 text-sm text-muted-foreground">No available members</div>}
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Select Member</label>
+                      <div className="max-h-40 overflow-auto border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700">
+                        {filteredMembers.length === 0 && <div className="p-2 text-sm text-gray-500 dark:text-gray-400">No available members</div>}
                         {filteredMembers.map((m) => (
                           <div
                             key={m.id}
                             onClick={() => setSelectedMemberId(m.id)}
-                            className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-primary/10 ${selectedMemberId === m.id ? 'bg-primary/20' : ''}`}
+                            className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${selectedMemberId === m.id ? 'bg-emerald-100 dark:bg-emerald-900/40' : ''}`}
                           >
                             <div>
-                              <div className="font-medium">{m.fullName}</div>
-                              <div className="text-sm text-muted-foreground">{m.phone}</div>
+                              <div className="font-medium text-gray-900 dark:text-white">{m.fullName}</div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">{m.phone}</div>
                             </div>
-                            {selectedMemberId === m.id && <div className="text-primary">Selected</div>}
+                            {selectedMemberId === m.id && <div className="text-emerald-600 dark:text-emerald-400">Selected</div>}
                           </div>
                         ))}
                       </div>
                     </div>
 
                     <div className="mb-4">
-                      <label htmlFor="role-select" className="block text-sm font-medium mb-1">Role</label>
-                      <select id="role-select" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className="w-full px-2 py-1 border border-input rounded bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-ring parish-select" aria-label="Select role in family">
+                      <label htmlFor="role-select" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Role</label>
+                      <select id="role-select" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 parish-select" aria-label="Select role in family">
                         {roleOptions.map((r) => (
                           <option key={r} value={r}>{r}</option>
                         ))}
@@ -541,8 +541,8 @@ const FamilyPage: React.FC = () => {
                     </div>
 
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => setShowAddMember(false)} className="px-3 py-2 rounded border border-border hover:bg-accent transition-colors">Cancel</button>
-                      <button onClick={addMemberToFamily} className="px-3 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">Add</button>
+                      <button onClick={() => setShowAddMember(false)} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors">Cancel</button>
+                      <button onClick={addMemberToFamily} className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">Add</button>
                     </div>
                   </div>
                 </div>
