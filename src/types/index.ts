@@ -23,32 +23,17 @@ export interface Donation {
 
 // Family Types
 export interface Family {
-  id: number;
-  family_name: string;
-  parish: string | null;
-  province: string | null;
-  jummuiya: string | null;
-  created_at: string;
+  id: string;
+  familyName: string;
+  createdAt: string;
 }
 
 // Member Types
 export interface Member {
-  id: number;
-  family_id: number;
-  first_name: string;
-  middle_name: string | null;
-  last_name: string;
-  date_of_birth: string | null;
-  relation: string | null;
-  baptism_date: string | null;
-  communion_date: string | null;
-  confirmation_date: string | null;
-  is_married: boolean | null;
-  marriage_date: string | null;
-  spouse: string | null;
-  parish: string | null;
-  jummuiya: string | null;
-  created_at: string;
+  id: string;
+  fullName: string;
+  phone?: string;
+  gender?: string;
 }
 
 // Profile Types (linked to auth.users)
