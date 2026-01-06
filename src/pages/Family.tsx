@@ -43,6 +43,10 @@ const FamilyPage: React.FC = () => {
   // Modal states
   const [showAddFamily, setShowAddFamily] = useState(false);
   const [newFamilyName, setNewFamilyName] = useState('');
+  const [selectedParish, setSelectedParish] = useState(1);
+  const [selectedProvince, setSelectedProvince] = useState('Dar es Salaam');
+  const [jummuiya, setJummuiya] = useState('');
+  const [dateJoined, setDateJoined] = useState(new Date().toISOString().split('T')[0]);
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
   const [showAddMember, setShowAddMember] = useState(false);
   const [memberQuery, setMemberQuery] = useState('');
@@ -54,6 +58,10 @@ const FamilyPage: React.FC = () => {
     try {
       const newFamily = createFamily(newFamilyName);
       setNewFamilyName('');
+      setSelectedParish(1);
+      setSelectedProvince('Dar es Salaam');
+      setJummuiya('');
+      setDateJoined(new Date().toISOString().split('T')[0]);
       setShowAddFamily(false);
       setSelectedFamily(newFamily);
     } catch (error) {
@@ -232,6 +240,14 @@ const FamilyPage: React.FC = () => {
         onClose={() => setShowAddFamily(false)}
         familyName={newFamilyName}
         onFamilyNameChange={setNewFamilyName}
+        selectedParish={selectedParish}
+        onParishChange={setSelectedParish}
+        selectedProvince={selectedProvince}
+        onProvinceChange={setSelectedProvince}
+        jummuiya={jummuiya}
+        onJummuiyaChange={setJummuiya}
+        dateJoined={dateJoined}
+        onDateJoinedChange={setDateJoined}
         onSave={handleCreateFamily}
       />
 
