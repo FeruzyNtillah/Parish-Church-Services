@@ -19,28 +19,53 @@ export interface Donation {
   purpose: string;
 }
 
-// Member Types
-export interface Member {
-  id: string;
-  fullName: string;
-  phone?: string;
-  gender?: 'Male' | 'Female' | 'Other';
-  [key: string]: unknown;
-}
+// Database Types (matching Supabase schema)
 
 // Family Types
 export interface Family {
-  id: string;
-  familyName: string;
-  createdAt: string;
+  id: number;
+  family_name: string;
+  parish: string | null;
+  province: string | null;
+  jummuiya: string | null;
+  created_at: string;
 }
 
-export interface FamilyMember {
-  id: string;
-  familyId: string;
-  memberId: string;
-  role: string; // Father, Mother, Child, Guardian, etc.
-  addedAt: string;
+// Member Types
+export interface Member {
+  id: number;
+  family_id: number;
+  first_name: string;
+  middle_name: string | null;
+  last_name: string;
+  date_of_birth: string | null;
+  relation: string | null;
+  baptism_date: string | null;
+  communion_date: string | null;
+  confirmation_date: string | null;
+  is_married: boolean | null;
+  marriage_date: string | null;
+  spouse: string | null;
+  parish: string | null;
+  jummuiya: string | null;
+  created_at: string;
+}
+
+// Profile Types (linked to auth.users)
+export interface Profile {
+  id: string; // UUID
+  email: string;
+  full_name: string | null;
+  role: string | null;
+}
+
+// Helper types for UI (computed from database types)
+export interface MemberWithFamily extends Member {
+  family?: Family;
+}
+
+export interface FamilyWithMembers extends Family {
+  members?: Member[];
 }
 
 // Sermon Types
