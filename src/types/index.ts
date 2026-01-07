@@ -34,6 +34,17 @@ export interface Member {
   fullName: string;
   phone?: string;
   gender?: string;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  relation?: string;
+  baptismDate?: string;
+  communionDate?: string;
+  confirmationDate?: string;
+  maritalStatus?: 'single' | 'married';
+  marriageDate?: string;
+  spouseName?: string;
 }
 
 // Profile Types (linked to auth.users)
@@ -42,6 +53,15 @@ export interface Profile {
   email: string;
   full_name: string | null;
   role: string | null;
+}
+
+// Family Member Types
+export interface FamilyMember {
+  id: string;
+  familyId: string;
+  memberId: string;
+  role: string;
+  addedAt: string;
 }
 
 // Helper types for UI (computed from database types)

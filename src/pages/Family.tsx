@@ -8,22 +8,18 @@ import {
   FamilyDetailsDrawer, 
   AddMemberModal 
 } from '../components/family';
-import { ROLE_OPTIONS } from '../constants/family';
-import type { Family } from '../types';
-
-const roleOptions = [...ROLE_OPTIONS];
+import type { Family, Member } from '../types';
 
 const FamilyPage: React.FC = () => {
   const {
     families,
     familyMembers,
     membersById,
-    membersNotAssigned,
     statistics,
     getMemberCount,
     createFamily,
     updateFamily,
-    addFamilyMember,
+    addNewFamilyMember,
     removeFamilyMember
   } = useFamilyData();
 
@@ -49,9 +45,6 @@ const FamilyPage: React.FC = () => {
   const [dateJoined, setDateJoined] = useState(new Date().toISOString().split('T')[0]);
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
   const [showAddMember, setShowAddMember] = useState(false);
-  const [memberQuery, setMemberQuery] = useState('');
-  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
-  const [selectedRole, setSelectedRole] = useState<string>(roleOptions[0]);
 
   // Event handlers
   const handleCreateFamily = () => {
@@ -83,17 +76,14 @@ const FamilyPage: React.FC = () => {
     }
   };
 
-  const handleAddMember = () => {
-    if (!selectedFamily || !selectedMemberId) return;
+  const handleAddNewMember = (memberData: Omit<Member, 'id'>) => {
+    if (!selectedFamily) return;
     
     try {
-      addFamilyMember(selectedFamily.id, selectedMemberId, selectedRole);
+      addNewFamilyMember(selectedFamily.id, memberData, memberData.relation || 'Other');
       setShowAddMember(false);
-      setMemberQuery('');
-      setSelectedMemberId(null);
-      setSelectedRole(roleOptions[0]);
     } catch (error) {
-      alert(error instanceof Error ? error.message : 'Failed to add member');
+      alert(error instanceof Error ? error.message : 'Failed to add family member');
     }
   };
 
@@ -102,12 +92,6 @@ const FamilyPage: React.FC = () => {
       removeFamilyMember(familyMemberId);
     }
   };
-
-  // Filter members for add member modal
-  const filteredMembers = membersNotAssigned.filter((m) => 
-    m.fullName.toLowerCase().includes(memberQuery.toLowerCase()) || 
-    m.phone?.includes(memberQuery)
-  );
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -265,15 +249,7 @@ const FamilyPage: React.FC = () => {
           <AddMemberModal
             isOpen={showAddMember}
             onClose={() => setShowAddMember(false)}
-            memberQuery={memberQuery}
-            onMemberQueryChange={setMemberQuery}
-            filteredMembers={filteredMembers}
-            selectedMemberId={selectedMemberId}
-            onMemberSelect={setSelectedMemberId}
-            selectedRole={selectedRole}
-            onRoleChange={setSelectedRole}
-            onAdd={handleAddMember}
-            roleOptions={roleOptions}
+            onAddMember={handleAddNewMember}
           />
         </FamilyDetailsDrawer>
       )}

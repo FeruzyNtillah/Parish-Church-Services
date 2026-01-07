@@ -5,12 +5,13 @@ import type { Family, FamilyMember, Member } from '../types';
 export const useFamilyData = () => {
   const [families, setFamilies] = useState<Family[]>(initialFamilies);
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>(initialFamilyMembers);
+  const [members, setMembers] = useState<Member[]>(membersData);
 
   const membersById = useMemo(() => {
     const map = new Map<string, Member>();
-    membersData.forEach((m) => map.set(m.id, m));
+    members.forEach((m) => map.set(m.id, m));
     return map;
-  }, []);
+  }, [members]);
 
   const getMemberCount = (familyId: string) => 
     familyMembers.filter((fm) => fm.familyId === familyId).length;
@@ -83,14 +84,42 @@ export const useFamilyData = () => {
     setFamilyMembers((s) => s.filter((fm) => fm.id !== familyMemberId));
   };
 
+  const createMember = (memberData: Omit<Member, 'id'>) => {
+    const newMember: Member = {
+      id: `MBR${Date.now()}`,
+      ...memberData
+    };
+    
+    setMembers((s) => [newMember, ...s]);
+    return newMember;
+  };
+
+  const addNewFamilyMember = (familyId: string, memberData: Omit<Member, 'id'>, role: string) => {
+    // Create the new member first
+    const newMember = createMember(memberData);
+    
+    // Then add them to the family
+    const newFamilyMember: FamilyMember = {
+      id: `FM${Date.now()}`,
+      familyId,
+      memberId: newMember.id,
+      role,
+      addedAt: new Date().toISOString().slice(0, 10),
+    };
+    
+    setFamilyMembers((s) => [newFamilyMember, ...s]);
+    return newFamilyMember;
+  };
+
   const membersNotAssigned = useMemo(() => {
     const assigned = new Set(familyMembers.map((fm) => fm.memberId));
-    return membersData.filter((m) => !assigned.has(m.id));
-  }, [familyMembers]);
+    return members.filter((m) => !assigned.has(m.id));
+  }, [familyMembers, members]);
 
   return {
     families,
     familyMembers,
+    members,
     membersById,
     membersNotAssigned,
     statistics,
@@ -98,6 +127,7 @@ export const useFamilyData = () => {
     createFamily,
     updateFamily,
     addFamilyMember,
+    addNewFamilyMember,
     removeFamilyMember,
     setFamilies,
     setFamilyMembers
