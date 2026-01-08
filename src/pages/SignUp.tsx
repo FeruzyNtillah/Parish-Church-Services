@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { useAuth } from '../contexts/AuthContext';
+import churchImage from '../assets/church.jpg';
 
 const SignUp = () => {
   const { signUp } = useAuth();
@@ -49,115 +50,113 @@ const SignUp = () => {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url('/src/assets/church.jpg')`,
+        backgroundImage: `url(${churchImage})`,
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/60"></div>
       
       <div className="relative z-10 w-full max-w-md px-4">
-        <Card className="backdrop-blur-md bg-white bg-opacity-90 shadow-2xl border border-white border-opacity-20">
-          <CardHeader className="pb-6">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">Create an account</h1>
-              <p className="text-gray-600">
-                Sign up to access the Parish Dashboard.
-              </p>
+        <div className="backdrop-blur-sm bg-black/10 rounded-3xl p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-white mb-3 tracking-tight drop-shadow-lg">Create an account</h1>
+            <p className="text-white/90 text-lg leading-relaxed drop-shadow-md">
+              Sign up to access the Parish Dashboard.
+            </p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="rounded-lg bg-red-500/90 border border-red-400/50 px-4 py-3 text-sm text-white backdrop-blur-sm">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="rounded-lg bg-emerald-500/90 border border-emerald-400/50 px-4 py-3 text-sm text-white backdrop-blur-sm">
+                {success}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-normal text-white/90 mb-2" htmlFor="fullName">
+                Full name
+              </label>
+              <input
+                id="fullName"
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                placeholder="Your full name"
+                autoComplete="name"
+              />
             </div>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="rounded-md bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
-                  {error}
-                </div>
-              )}
-              {success && (
-                <div className="rounded-md bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-700">
-                  {success}
-                </div>
-              )}
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fullName">
-                  Full name
-                </label>
-                <input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Your full name"
-                  autoComplete="name"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-normal text-white/90 mb-2" htmlFor="email">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                placeholder="you@example.com"
+                autoComplete="email"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-normal text-white/90 mb-2" htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                autoComplete="new-password"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                  autoComplete="new-password"
-                />
-              </div>
-
-              <div>
-                <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                  htmlFor="confirmPassword"
-                >
-                  Confirm password
-                </label>
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                  autoComplete="new-password"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 shadow-lg"
-                loading={loading}
+            <div>
+              <label
+                className="block text-sm font-normal text-white/90 mb-2"
+                htmlFor="confirmPassword"
               >
-                Create account
-              </Button>
-            </form>
+                Confirm password
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                autoComplete="new-password"
+              />
+            </div>
 
-            <p className="mt-6 text-sm text-center text-gray-600">
+            <Button
+              type="submit"
+              className="w-full justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-xl transition-all duration-150 ease-out shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              loading={loading}
+            >
+              Create account
+            </Button>
+          </form>
+
+          <div className="mt-8 pt-6 border-t border-white/20">
+            <p className="text-sm text-center text-white/80">
               Already have an account?{' '}
-              <Link to="/login" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <Link to="/login" className="text-white hover:text-yellow-400 font-medium transition-colors duration-150">
                 Sign in
               </Link>
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

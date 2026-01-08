@@ -1,4 +1,7 @@
-# TODO: Fix Tailwind CSS Linting Errors in Sidebar.tsx
+# TODO for Enhancing SignUp and Login Pages
 
-- [x] Replace `bg-gradient-to-r` with `bg-linear-to-r` on line 22 in the div's className
-- [x] Replace `bg-gradient-to-r` with `bg-linear-to-r` on line 23 in the h1's className
+- [x] Fix background image import in SignUp.tsx
+- [x] Enhance styling in SignUp.tsx (add gradient overlay, improve card design, use gold accents)
+- [x] Fix background image import in Login.tsx
+- [x] Enhance styling in Login.tsx (add gradient overlay, improve card design, use gold accents)
+- [x] Test the pages to ensure background loads and styling looks good
