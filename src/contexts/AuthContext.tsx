@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 
@@ -55,16 +55,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       console.error('Sign in error', error);
       return { error: new Error(error.message) };
     }
     return { error: null };
-  };
+  }, []);
 
-  const signUp = async (email: string, password: string, fullName?: string) => {
+  const signUp = useCallback(async (email: string, password: string, fullName?: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -81,17 +81,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return { error: null };
-  };
+  }, []);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('Sign out error', error);
       throw error;
     }
-  };
+  }, []);
 
-  const sendPasswordReset = async (email: string) => {
+  const sendPasswordReset = useCallback(async (email: string) => {
     const redirectTo = `${window.location.origin}/reset-password`;
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo,
@@ -101,27 +101,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return { error: new Error(error.message) };
     }
     return { error: null };
-  };
+  }, []);
 
-  const updatePassword = async (newPassword: string) => {
+  const updatePassword = useCallback(async (newPassword: string) => {
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) {
       console.error('Update password error', error);
       return { error: new Error(error.message) };
     }
     return { error: null };
-  };
+  }, []);
 
-  const value: AuthContextValue = {
-    user,
-    session,
-    loading,
-    signIn,
-    signUp,
-    signOut,
-    sendPasswordReset,
-    updatePassword,
-  };
+  const value: AuthContextValue = useMemo(
+    () => ({
+      user,
+      session,
+      loading,
+      signIn,
+      signUp,
+      signOut,
+      sendPasswordReset,
+      updatePassword,
+    }),
+    [user, session, loading, signIn, signUp, signOut, sendPasswordReset, updatePassword],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

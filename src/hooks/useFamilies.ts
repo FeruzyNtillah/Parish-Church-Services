@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { familiesService, membersService } from '../services';
 import type { Family, Member, FamilyWithMembers } from '../types';
 
@@ -52,8 +52,8 @@ export const useFamilies = () => {
     []
   );
 
-  // Statistics
-  const statistics = {
+  // Statistics (memoized to avoid unnecessary re-renders)
+  const statistics = useMemo(() => ({
     totalFamilies: families.length,
     totalMembers: members.length,
     avgMembersPerFamily: families.length > 0 
@@ -65,7 +65,7 @@ export const useFamilies = () => {
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return createdDate >= thirtyDaysAgo;
     }).length,
-  };
+  }), [families, members]);
 
   // Create a new family
   const createFamily = useCallback(
