@@ -42,8 +42,10 @@ const Login = () => {
     <div
       className="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url(${churchImage})`,
-      }}
+        '--bg-image': `url(${churchImage})`,
+        backgroundImage: 'var(--bg-image)',
+      } as React.CSSProperties}
+      data-testid="login-background"
     >
       <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/60"></div>
       
