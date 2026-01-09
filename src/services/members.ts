@@ -34,7 +34,7 @@ export const membersService = {
       .from('members')
       .select(`
         *,
-        families (*)
+        family (*)
       `)
       .eq('id', id)
       .single();
