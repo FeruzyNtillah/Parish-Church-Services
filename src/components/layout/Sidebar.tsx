@@ -42,19 +42,37 @@ const Sidebar = () => {
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group hover:shadow-sm ${
                   isActive 
                     ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-500 dark:text-emerald-400 shadow-md border border-emerald-200 dark:border-emerald-600' 
-                    : 'text-muted-foreground hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:text-emerald-500 dark:hover:text-emerald-400 border border-transparent dark:border-transparent hover:border-emerald-200 dark:hover:border-emerald-600'
+                    : 'text-muted-foreground border border-transparent dark:border-transparent hover:shadow-sm'
                 }`}
+                style={{
+                  '--hover-bg': 'oklch(55.1% 0.027 264.364)',
+                  '--hover-text': 'oklch(55.1% 0.027 264.364)'
+                } as React.CSSProperties}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.backgroundColor = 'oklch(55.1% 0.027 264.364 / 0.1)';
+                    e.currentTarget.style.color = 'oklch(55.1% 0.027 264.364)';
+                    e.currentTarget.style.borderColor = 'oklch(55.1% 0.027 264.364 / 0.2)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.backgroundColor = '';
+                    e.currentTarget.style.color = '';
+                    e.currentTarget.style.borderColor = '';
+                  }
+                }}
               >
                 <Icon className={`w-5 h-5 transition-colors ${
                   isActive 
                     ? 'text-emerald-500 dark:text-emerald-400' 
-                    : 'text-muted-foreground group-hover:text-emerald-500 dark:group-hover:text-emerald-400'
+                    : 'text-muted-foreground'
                 }`} />
                 {item.label && (
                   <span className={`font-medium transition-colors ${
                     isActive 
                       ? 'text-emerald-500 dark:text-emerald-400' 
-                      : 'group-hover:text-emerald-500 dark:group-hover:text-emerald-400'
+                      : ''
                   }`}>
                     {item.label}
                   </span>
