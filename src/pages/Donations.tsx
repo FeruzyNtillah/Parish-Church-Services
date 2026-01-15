@@ -85,7 +85,7 @@ const Donations = () => {
         <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-50">
+              <tr className="border-b border-emerald-600 dark:border-emerald-500 bg-emerald-500 dark:bg-emerald-600 text-emerald-50 dark:text-emerald-300">
                 <th className="p-4 text-left">
                   <SortHeader
                     label="Donation ID"

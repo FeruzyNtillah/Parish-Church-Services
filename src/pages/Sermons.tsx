@@ -39,8 +39,8 @@ const Sermons = () => {
             <h2 className="text-2xl font-semibold text-foreground mb-4">Recent Sermons</h2>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border">
+                <thead className="bg-emerald-500 dark:bg-emerald-600 border-b border-emerald-600 dark:border-emerald-500">
+                  <tr className="border-b border-emerald-600 dark:border-emerald-500">
                     <th className="text-left py-3 px-4 font-semibold text-muted-foreground">
                       Title
                     </th>
