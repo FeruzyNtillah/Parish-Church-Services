@@ -41,20 +41,20 @@ const Sidebar = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group hover:shadow-sm ${
                   isActive 
-                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-500 shadow-sm' 
-                    : 'text-muted-foreground hover:bg-emerald-100 dark:hover:bg-emerald-950'
+                    ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 shadow-sm' 
+                    : 'text-muted-foreground hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-600'
                 }`}
               >
                 <Icon className={`w-5 h-5 transition-colors ${
                   isActive 
-                    ? 'text-emerald-500' 
-                    : 'text-muted-foreground group-hover:text-emerald-500'
+                    ? 'text-emerald-600' 
+                    : 'text-muted-foreground group-hover:text-emerald-600'
                 }`} />
                 {item.label && (
                   <span className={`font-medium transition-colors ${
                     isActive 
-                      ? 'text-emerald-500' 
-                      : 'group-hover:text-emerald-500'
+                      ? 'text-emerald-600' 
+                      : 'group-hover:text-emerald-600'
                   }`}>
                     {item.label}
                   </span>
