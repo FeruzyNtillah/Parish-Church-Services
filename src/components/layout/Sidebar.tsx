@@ -33,7 +33,9 @@ const Sidebar = () => {
         <nav className="flex-1 px-4 py-6 space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path;
+            const isActive = location.pathname === item.path || 
+                           (item.path === '/' && location.pathname === '/') ||
+                           (item.path !== '/' && location.pathname.startsWith(item.path));
             
             return (
               <Link
@@ -41,7 +43,7 @@ const Sidebar = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group hover:shadow-sm ${
                   isActive 
-                    ? 'text-emerald-500 shadow-md border border-emerald-200' 
+                    ? 'bg-emerald-500 text-white shadow-md border border-emerald-600' 
                     : 'text-muted-foreground border border-transparent hover:shadow-sm'
                 }`}
                 style={{
@@ -62,16 +64,21 @@ const Sidebar = () => {
                     e.currentTarget.style.borderColor = '';
                   }
                 }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.backgroundColor = '';
+                  e.currentTarget.style.color = '';
+                  e.currentTarget.style.borderColor = '';
+                }}
               >
                 <Icon className={`w-5 h-5 transition-colors ${
                   isActive 
-                    ? 'text-emerald-500' 
+                    ? 'text-white' 
                     : 'text-muted-foreground'
                 }`} />
                 {item.label && (
                   <span className={`font-medium transition-colors ${
                     isActive 
-                      ? 'text-emerald-500' 
+                      ? 'text-white' 
                       : ''
                   }`}>
                     {item.label}
