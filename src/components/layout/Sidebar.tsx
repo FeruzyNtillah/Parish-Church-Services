@@ -41,8 +41,8 @@ const Sidebar = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group hover:shadow-sm ${
                   isActive 
-                    ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-500 dark:text-emerald-400 shadow-md border border-emerald-200 dark:border-emerald-600' 
-                    : 'text-muted-foreground border border-transparent dark:border-transparent hover:shadow-sm'
+                    ? 'text-emerald-500 shadow-md border border-emerald-200' 
+                    : 'text-muted-foreground border border-transparent hover:shadow-sm'
                 }`}
                 style={{
                   '--hover-bg': 'oklch(55.1% 0.027 264.364)',
@@ -65,13 +65,13 @@ const Sidebar = () => {
               >
                 <Icon className={`w-5 h-5 transition-colors ${
                   isActive 
-                    ? 'text-emerald-500 dark:text-emerald-400' 
+                    ? 'text-emerald-500' 
                     : 'text-muted-foreground'
                 }`} />
                 {item.label && (
                   <span className={`font-medium transition-colors ${
                     isActive 
-                      ? 'text-emerald-500 dark:text-emerald-400' 
+                      ? 'text-emerald-500' 
                       : ''
                   }`}>
                     {item.label}
