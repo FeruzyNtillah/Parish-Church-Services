@@ -33,19 +33,7 @@ const Topbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm"
-            style={{
-              '--hover-bg': 'oklch(55.1% 0.027 264.364)',
-              '--hover-text': 'oklch(55.1% 0.027 264.364)'
-            } as React.CSSProperties}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'oklch(55.1% 0.027 264.364 / 0.1)';
-              e.currentTarget.style.color = 'oklch(55.1% 0.027 264.364)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '';
-              e.currentTarget.style.color = '';
-            }}
+            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
             aria-label="Toggle theme"
           >
             {theme === 'light' ? (
@@ -57,19 +45,7 @@ const Topbar = () => {
 
           {/* Notifications */}
           <button
-            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm"
-            style={{
-              '--hover-bg': 'oklch(55.1% 0.027 264.364)',
-              '--hover-text': 'oklch(55.1% 0.027 264.364)'
-            } as React.CSSProperties}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'oklch(55.1% 0.027 264.364 / 0.1)';
-              e.currentTarget.style.color = 'oklch(55.1% 0.027 264.364)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '';
-              e.currentTarget.style.color = '';
-            }}
+            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
             aria-label="Notifications"
           >
             <Bell className="w-5 h-5" strokeWidth={2} />
@@ -78,19 +54,7 @@ const Topbar = () => {
 
           {/* Settings */}
           <button
-            className="p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm"
-            style={{
-              '--hover-bg': 'oklch(55.1% 0.027 264.364)',
-              '--hover-text': 'oklch(55.1% 0.027 264.364)'
-            } as React.CSSProperties}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'oklch(55.1% 0.027 264.364 / 0.1)';
-              e.currentTarget.style.color = 'oklch(55.1% 0.027 264.364)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '';
-              e.currentTarget.style.color = '';
-            }}
+            className="p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
             aria-label="Settings"
           >
             <Settings className="w-5 h-5" strokeWidth={2} />
