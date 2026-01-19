@@ -118,7 +118,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
         <div className="flex gap-3">
           <button
             onClick={() => onView(family)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-white bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <Eye className="w-4 h-4" />
             View Family

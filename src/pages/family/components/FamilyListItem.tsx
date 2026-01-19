@@ -131,7 +131,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
           <div className="flex items-center gap-3 ml-6">
             <button
               onClick={() => onView(family)}
-              className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent"
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent"
             >
               <Eye className="w-4 h-4" />
               View Family
