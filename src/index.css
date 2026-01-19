@@ -102,4 +102,11 @@
     background-color: #10b981;
     color: white;
   }
+
+  .church-background {
+    background-image: url('./assets/church.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }

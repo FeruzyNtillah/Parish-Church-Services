@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
-import churchImage from '../assets/church.jpg';
 
 const SignUp = () => {
   const { signUp } = useAuth();
@@ -50,10 +49,7 @@ const SignUp = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${churchImage})`,
-      }}
+      className="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat church-background"
     >
       <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/60"></div>
       
