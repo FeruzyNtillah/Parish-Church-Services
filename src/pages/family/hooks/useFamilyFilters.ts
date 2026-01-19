@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { Family } from '../types';
+import type { Family } from '../../../types';
 
 type SortField = 'name' | 'members' | 'date';
 type SortOrder = 'asc' | 'desc';

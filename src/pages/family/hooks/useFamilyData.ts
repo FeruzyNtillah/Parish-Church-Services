@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { familiesData as initialFamilies, familyMembersData as initialFamilyMembers, membersData } from '../data';
-import type { Family, FamilyMember, Member } from '../types';
+import { familiesData as initialFamilies, familyMembersData as initialFamilyMembers, membersData } from '../../../data';
+import type { Family, FamilyMember, Member } from '../../../types';
 
 export const useFamilyData = () => {
   const [families, setFamilies] = useState<Family[]>(initialFamilies);

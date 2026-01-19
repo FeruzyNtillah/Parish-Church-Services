@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Events from './pages/Events';
 import Sermons from './pages/Sermons';
 import Donations from './pages/Donations';
-import Family from './pages/Family';
+import Family from './pages/family';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';

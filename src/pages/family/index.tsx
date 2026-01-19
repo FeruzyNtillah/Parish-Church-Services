@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Plus, Search, ChevronLeft, ChevronRight, Home } from 'lucide-react';
-import { useFamilyData, useFamilyFilters } from '../hooks';
+import { useFamilyData, useFamilyFilters } from '../../hooks';
 import { 
   FamilyCard, 
   FamilyStats, 
   AddFamilyModal, 
   FamilyDetailsDrawer, 
   AddMemberModal 
-} from '../components/family';
-import type { Family, Member } from '../types';
+} from './components';
+import type { Family, Member } from '../../types';
 
 const FamilyPage: React.FC = () => {
   const {
@@ -155,7 +155,7 @@ const FamilyPage: React.FC = () => {
 
       {/* Families Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
-        {paginatedFamilies.map((family) => (
+        {paginatedFamilies.map((family: Family) => (
           <FamilyCard
             key={family.id}
             family={family}
