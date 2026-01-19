@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Plus, Search, ChevronLeft, ChevronRight, Home } from 'lucide-react';
-import { useFamilyData, useFamilyFilters } from '../../hooks';
+import React, { useState, useMemo } from 'react';
+import { Plus, Search, ChevronLeft, ChevronRight, Home, Grid, List } from 'lucide-react';
+import { useFamilyFilters, useFamilies } from '../../hooks';
 import { 
   FamilyCard, 
   FamilyListItem,
@@ -141,7 +141,7 @@ const FamilyPage: React.FC = () => {
     
     const groups: Record<string, Family[]> = {};
     filteredAndSortedFamilies.forEach(family => {
-      const firstLetter = family.familyName.charAt(0).toUpperCase();
+      const firstLetter = family.family_name.charAt(0).toUpperCase();
       if (!groups[firstLetter]) {
         groups[firstLetter] = [];
       }
@@ -276,21 +276,74 @@ const FamilyPage: React.FC = () => {
         </div>
       )}
 
-      {/* Families Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
-        {paginatedFamilies.map((family: Family) => (
-          <FamilyCard
-            key={family.id}
-            family={family}
-            memberCount={getMemberCount(family.id)}
-            onView={setSelectedFamily}
-            onEdit={handleEditFamily}
-          />
-        ))}
-      </div>
+      {/* Families Display */}
+      {showAlphabeticalGroups && groupedFamilies ? (
+        <div className="space-y-8 mb-6">
+          {Object.entries(groupedFamilies)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([letter, families]) => (
+              <div key={letter}>
+                <h3 className="text-2xl font-bold text-foreground mb-4">{letter}</h3>
+                {viewMode === 'grid' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {families.map((family: Family) => (
+                      <FamilyCard
+                        key={family.id}
+                        family={family}
+                        memberCount={getMemberCount(family.id)}
+                        onView={setSelectedFamily}
+                        onEdit={handleEditFamily}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {families.map((family: Family) => (
+                      <FamilyListItem
+                        key={family.id}
+                        family={family}
+                        memberCount={getMemberCount(family.id)}
+                        onView={setSelectedFamily}
+                        onEdit={handleEditFamily}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      ) : (
+        <>
+          {viewMode === 'grid' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
+              {paginatedFamilies.map((family: Family) => (
+                <FamilyCard
+                  key={family.id}
+                  family={family}
+                  memberCount={getMemberCount(family.id)}
+                  onView={setSelectedFamily}
+                  onEdit={handleEditFamily}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4 mb-6">
+              {paginatedFamilies.map((family: Family) => (
+                <FamilyListItem
+                  key={family.id}
+                  family={family}
+                  memberCount={getMemberCount(family.id)}
+                  onView={setSelectedFamily}
+                  onEdit={handleEditFamily}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {!showAlphabeticalGroups && totalPages > 1 && (
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
             Showing {((currentPage - 1) * 12) + 1} to {Math.min(currentPage * 12, filteredAndSortedFamilies.length)} of {filteredAndSortedFamilies.length} families
