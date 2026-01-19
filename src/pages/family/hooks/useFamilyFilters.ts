@@ -9,7 +9,7 @@ export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: 
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<SortField>('name');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
-  const familiesPerPage = 12;
+  const familiesPerPage = 24;
 
   const filteredAndSortedFamilies = useMemo(() => {
     let filtered = families.filter(family =>
