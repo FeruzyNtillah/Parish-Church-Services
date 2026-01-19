@@ -1,15 +1,18 @@
-import React, { useState, useMemo } from 'react';
-import { Plus, Search, ChevronLeft, ChevronRight, Home, Grid, List } from 'lucide-react';
-import { useFamilyFilters, useFamilies } from '../../hooks';
+import React, { useMemo, useState } from 'react';
+import { Plus, Home } from 'lucide-react';
+import { useFamilies } from '../../hooks';
+import { useFamilyFilters } from './hooks/useFamilyFilters';
+import { useFamilyHandlers } from './hooks/useFamilyHandlers';
 import { 
-  FamilyCard, 
-  FamilyListItem,
   FamilyStats, 
   AddFamilyModal, 
   FamilyDetailsDrawer, 
   AddMemberModal 
 } from './components';
-import type { Family, Member } from '../../types';
+import { FamilyDisplay } from './components/FamilyDisplay';
+import { Pagination } from './components/Pagination';
+import { SearchAndFilters } from './components/SearchAndFilters';
+import type { Family } from '../../types';
 
 const FamilyPage: React.FC = () => {
   const {
@@ -21,21 +24,22 @@ const FamilyPage: React.FC = () => {
     createFamily,
     updateFamily,
     createMember,
-    deleteMember
+    deleteMember,
   } = useFamilies();
 
-  // Helper function to get members for a family
-  const getFamilyMembers = (familyId: number) => {
-    return members.filter((m) => m.family_id === familyId);
-  };
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showAlphabeticalGroups, setShowAlphabeticalGroups] = useState(false);
 
-  // Create membersById map for FamilyDetailsDrawer
-  const membersById = new Map(members.map(member => [member.id.toString(), member]));
+  // Helper functions
+  const getFamilyMembers = (familyId: number) => 
+    members.filter((m) => m.family_id === familyId);
 
-  // Helper function to get member count for a family
-  const getMemberCount = (familyId: number) => {
-    return getFamilyMembers(familyId).length;
-  };
+  const getMemberCount = (familyId: number) => 
+    getFamilyMembers(familyId).length;
+
+  const membersById = new Map(
+    members.map(member => [member.id.toString(), member])
+  );
 
   const {
     searchQuery,
@@ -47,93 +51,50 @@ const FamilyPage: React.FC = () => {
     toggleSort,
     totalPages,
     paginatedFamilies,
-    filteredAndSortedFamilies
+    filteredAndSortedFamilies,
   } = useFamilyFilters(families, getMemberCount);
 
-  // Modal states
-  const [showAddFamily, setShowAddFamily] = useState(false);
-  const [newFamilyName, setNewFamilyName] = useState('');
-  const [selectedParish, setSelectedParish] = useState(1);
-  const [selectedProvince, setSelectedProvince] = useState('Dar es Salaam');
-  const [jummuiya, setJummuiya] = useState('');
-  const [dateJoined, setDateJoined] = useState(new Date().toISOString().split('T')[0]);
-  const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
-  const [showAddMember, setShowAddMember] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showAlphabeticalGroups, setShowAlphabeticalGroups] = useState(false);
+  const familyHandlers = useFamilyHandlers({
+    createFamily,
+    updateFamily,
+    createMember,
+    deleteMember,
+  });
 
-  // Get family members for selected family and convert to FamilyMember format
+  const {
+    showAddFamily,
+    setShowAddFamily,
+    showAddMember,
+    setShowAddMember,
+    selectedFamily,
+    setSelectedFamily,
+    newFamilyName,
+    setNewFamilyName,
+    selectedParish,
+    setSelectedParish,
+    selectedProvince,
+    setSelectedProvince,
+    jummuiya,
+    setJummuiya,
+    dateJoined,
+    setDateJoined,
+    handleCreateFamily,
+    handleEditFamily,
+    handleAddNewMember,
+    handleRemoveMember,
+  } = familyHandlers;
+
+  // Get family members for selected family
   const familyMembers = selectedFamily 
     ? getFamilyMembers(selectedFamily.id).map(member => ({
         id: `FM${member.id}`,
         familyId: selectedFamily.id,
         memberId: member.id,
         role: member.relation || 'Member',
-        addedAt: member.created_at
+        addedAt: member.created_at,
       }))
     : [];
 
-  // Event handlers
-  const handleCreateFamily = async () => {
-    try {
-      const familyData = {
-        family_name: newFamilyName,
-        parish: selectedParish === 1 ? 'St. Mary' : 'Other Parish',
-        province: selectedProvince,
-        jummuiya: jummuiya || undefined
-      };
-      const newFamily = await createFamily(familyData);
-      setNewFamilyName('');
-      setSelectedParish(1);
-      setSelectedProvince('Dar es Salaam');
-      setJummuiya('');
-      setDateJoined(new Date().toISOString().split('T')[0]);
-      setShowAddFamily(false);
-      setSelectedFamily(newFamily);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Failed to create family');
-    }
-  };
-
-  const handleEditFamily = async (family: Family) => {
-    const newName = prompt('Edit family name', family.family_name);
-    if (newName && newName.trim()) {
-      try {
-        await updateFamily(family.id, { family_name: newName.trim() });
-        if (selectedFamily?.id === family.id) {
-          setSelectedFamily({ ...family, family_name: newName.trim() });
-        }
-      } catch (error) {
-        alert(error instanceof Error ? error.message : 'Failed to update family');
-      }
-    }
-  };
-
-  const handleAddNewMember = async (memberData: Omit<Member, 'id'>) => {
-    if (!selectedFamily) return;
-    
-    try {
-      const memberWithFamilyId = {
-        ...memberData,
-        family_id: selectedFamily.id
-      };
-      await createMember(memberWithFamilyId);
-      setShowAddMember(false);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Failed to add family member');
-    }
-  };
-
-  const handleRemoveMember = async (memberId: string) => {
-    if (confirm('Remove member from family?')) {
-      try {
-        // Convert string memberId back to number for the API
-        await deleteMember(parseInt(memberId.replace('FM', '')));
-      } catch (error) {
-        alert(error instanceof Error ? error.message : 'Failed to remove member');
-      }
-    }
-  };
 
   // Group families alphabetically
   const groupedFamilies = useMemo(() => {
@@ -150,13 +111,6 @@ const FamilyPage: React.FC = () => {
     
     return groups;
   }, [filteredAndSortedFamilies, showAlphabeticalGroups]);
-
-  // Jump to page functionality
-  const handleJumpToPage = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -179,86 +133,18 @@ const FamilyPage: React.FC = () => {
       <FamilyStats {...statistics} />
 
       {/* Search and Filters */}
-      <div className="bg-card p-6 rounded-2xl shadow-xl border border-border p-6 mb-6">
-        <div className="flex flex-col lg:flex-row gap-4 mb-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search families by name..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-input rounded-xl focus:ring-2 focus:ring-ring focus:border-ring bg-background text-foreground placeholder:text-muted-foreground transition-all duration-300"
-              />
-            </div>
-          </div>
-          
-          <div className="flex gap-2">
-            {(['name', 'members', 'date'] as const).map((field) => (
-              <button
-                key={field}
-                onClick={() => toggleSort(field)}
-                className={`px-4 py-3 rounded-xl border transition-all duration-300 transform hover:scale-105 ${
-                  sortBy === field 
-                    ? 'bg-primary/10 border-primary text-primary shadow-lg' 
-                    : 'border-border hover:bg-accent text-foreground'
-                }`}
-              >
-                {field.charAt(0).toUpperCase() + field.slice(1)} {sortBy === field && (sortOrder === 'asc' ? '↑' : '↓')}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* View Controls */}
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          <div className="flex gap-2">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`px-4 py-3 rounded-xl border transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
-                viewMode === 'grid' 
-                  ? 'bg-primary/10 border-primary text-primary shadow-lg' 
-                  : 'border-border hover:bg-accent text-foreground'
-              }`}
-            >
-              <Grid className="w-4 h-4" />
-              Grid
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`px-4 py-3 rounded-xl border transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
-                viewMode === 'list' 
-                  ? 'bg-primary/10 border-primary text-primary shadow-lg' 
-                  : 'border-border hover:bg-accent text-foreground'
-              }`}
-            >
-              <List className="w-4 h-4" />
-              List
-            </button>
-            <button
-              onClick={() => setShowAlphabeticalGroups(!showAlphabeticalGroups)}
-              className={`px-4 py-3 rounded-xl border transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
-                showAlphabeticalGroups 
-                  ? 'bg-primary/10 border-primary text-primary shadow-lg' 
-                  : 'border-border hover:bg-accent text-foreground'
-              }`}
-            >
-              A-Z
-            </button>
-          </div>
-          
-          <div className="text-sm text-muted-foreground font-medium">
-            {filteredAndSortedFamilies.length} families total
-          </div>
-        </div>
-
-        {searchQuery && (
-          <div className="mt-4 text-sm text-muted-foreground">
-            Found {filteredAndSortedFamilies.length} families matching "{searchQuery}"
-          </div>
-        )}
-      </div>
+      <SearchAndFilters
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onToggleSort={toggleSort}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        showAlphabetical={showAlphabeticalGroups}
+        onAlphabeticalToggle={() => setShowAlphabeticalGroups(!showAlphabeticalGroups)}
+        totalFamilies={filteredAndSortedFamilies.length}
+      />
 
       {/* Loading State */}
       {loading && (
@@ -277,175 +163,25 @@ const FamilyPage: React.FC = () => {
       )}
 
       {/* Families Display */}
-      {showAlphabeticalGroups && groupedFamilies ? (
-        <div className="space-y-8 mb-6">
-          {Object.entries(groupedFamilies)
-            .sort(([a], [b]) => a.localeCompare(b))
-            .map(([letter, families]) => (
-              <div key={letter}>
-                <h3 className="text-2xl font-bold text-foreground mb-4">{letter}</h3>
-                {viewMode === 'grid' ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {families.map((family: Family) => (
-                      <FamilyCard
-                        key={family.id}
-                        family={family}
-                        memberCount={getMemberCount(family.id)}
-                        onView={setSelectedFamily}
-                        onEdit={handleEditFamily}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {families.map((family: Family) => (
-                      <FamilyListItem
-                        key={family.id}
-                        family={family}
-                        memberCount={getMemberCount(family.id)}
-                        onView={setSelectedFamily}
-                        onEdit={handleEditFamily}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-        </div>
-      ) : (
-        <>
-          {viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
-              {paginatedFamilies.map((family: Family) => (
-                <FamilyCard
-                  key={family.id}
-                  family={family}
-                  memberCount={getMemberCount(family.id)}
-                  onView={setSelectedFamily}
-                  onEdit={handleEditFamily}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="space-y-4 mb-6">
-              {paginatedFamilies.map((family: Family) => (
-                <FamilyListItem
-                  key={family.id}
-                  family={family}
-                  memberCount={getMemberCount(family.id)}
-                  onView={setSelectedFamily}
-                  onEdit={handleEditFamily}
-                />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      <FamilyDisplay
+        families={paginatedFamilies}
+        viewMode={viewMode}
+        showAlphabetical={showAlphabeticalGroups}
+        groupedFamilies={groupedFamilies}
+        getMemberCount={getMemberCount}
+        onViewFamily={setSelectedFamily}
+        onEditFamily={handleEditFamily}
+      />
 
       {/* Pagination */}
       {!showAlphabeticalGroups && totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
-            Showing {((currentPage - 1) * 12) + 1} to {Math.min(currentPage * 12, filteredAndSortedFamilies.length)} of {filteredAndSortedFamilies.length} families
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="p-2 rounded-xl border border-border hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 disabled:hover:bg-transparent"
-              aria-label="Previous page"
-              title="Previous page"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            
-            {/* Page numbers with jump functionality */}
-            <div className="flex items-center gap-1">
-              {totalPages <= 7 ? (
-                Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-2 text-sm font-bold rounded-xl transition-all duration-300 transform hover:scale-105 ${
-                      currentPage === page
-                        ? 'bg-primary text-primary-foreground shadow-lg'
-                        : 'border border-border hover:bg-accent text-foreground'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))
-              ) : (
-                <>
-                  <button
-                    onClick={() => setCurrentPage(1)}
-                    className={`px-3 py-2 text-sm font-bold rounded-xl transition-all duration-300 transform hover:scale-105 ${
-                      currentPage === 1
-                        ? 'bg-primary text-primary-foreground shadow-lg'
-                        : 'border border-border hover:bg-accent text-foreground'
-                    }`}
-                  >
-                    1
-                  </button>
-                  
-                  {currentPage > 3 && (
-                    <span className="px-2 text-muted-foreground">...</span>
-                  )}
-                  
-                  {currentPage > 2 && currentPage < totalPages - 1 && (
-                    <button
-                      onClick={() => setCurrentPage(currentPage)}
-                      className="px-3 py-2 text-sm font-bold bg-primary text-primary-foreground shadow-lg rounded-xl"
-                    >
-                      {currentPage}
-                    </button>
-                  )}
-                  
-                  {currentPage < totalPages - 2 && (
-                    <span className="px-2 text-muted-foreground">...</span>
-                  )}
-                  
-                  <button
-                    onClick={() => setCurrentPage(totalPages)}
-                    className={`px-3 py-2 text-sm font-bold rounded-xl transition-all duration-300 transform hover:scale-105 ${
-                      currentPage === totalPages
-                        ? 'bg-primary text-primary-foreground shadow-lg'
-                        : 'border border-border hover:bg-accent text-foreground'
-                    }`}
-                  >
-                    {totalPages}
-                  </button>
-                </>
-              )}
-            </div>
-            
-            <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="p-2 rounded-xl border border-border hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 disabled:hover:bg-transparent"
-              aria-label="Next page"
-              title="Next page"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          
-          {/* Jump to page input */}
-          {totalPages > 7 && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground font-medium">Go to page:</span>
-              <input
-                type="number"
-                min="1"
-                max={totalPages}
-                value={currentPage}
-                onChange={(e) => handleJumpToPage(parseInt(e.target.value) || 1)}
-                className="w-16 px-2 py-2 text-sm border border-input rounded-xl focus:ring-2 focus:ring-ring focus:border-ring bg-background text-foreground text-center transition-all duration-300"
-              />
-            </div>
-          )}
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalCount={filteredAndSortedFamilies.length}
+          itemsPerPage={12}
+          onPageChange={setCurrentPage}
+        />
       )}
 
       {/* Empty State */}
