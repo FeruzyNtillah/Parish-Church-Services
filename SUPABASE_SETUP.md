@@ -11,9 +11,9 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### How to get these values:
+### How to get these values
 
-1. Go to your Supabase project dashboard: https://app.supabase.com
+1. Go to your Supabase project dashboard: <https://app.supabase.com>
 2. Navigate to **Settings** → **API**
 3. Copy the **Project URL** and paste it as `VITE_SUPABASE_URL`
 4. Copy the **anon/public** key and paste it as `VITE_SUPABASE_ANON_KEY`
@@ -23,6 +23,7 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 Your database should have the following tables matching the ERD:
 
 ### `families` table
+
 - `id` (int8, primary key)
 - `family_name` (text)
 - `parish` (text, nullable)
@@ -31,6 +32,7 @@ Your database should have the following tables matching the ERD:
 - `created_at` (timestamptz)
 
 ### `members` table
+
 - `id` (int8, primary key)
 - `family_id` (int8, foreign key → families.id)
 - `first_name` (text)
@@ -49,6 +51,7 @@ Your database should have the following tables matching the ERD:
 - `created_at` (timestamptz)
 
 ### `profiles` table
+
 - `id` (uuid, primary key, foreign key → auth.users.id)
 - `email` (text)
 - `full_name` (text, nullable)
@@ -107,6 +110,7 @@ function MyComponent() {
 ## 5. TypeScript Types
 
 All database types are defined in `src/types/index.ts` and match your Supabase schema:
+
 - `Family`
 - `Member`
 - `Profile`
@@ -119,4 +123,3 @@ All database types are defined in `src/types/index.ts` and match your Supabase s
 2. Ensure your database tables match the schema
 3. Set up RLS policies if needed
 4. Start using the services and hooks in your components
-
