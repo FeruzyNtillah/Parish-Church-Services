@@ -82,7 +82,7 @@ const SignUp = () => {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
                 placeholder="Your full name"
                 autoComplete="name"
               />
@@ -97,7 +97,7 @@ const SignUp = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
                 placeholder="you@example.com"
                 autoComplete="email"
               />
@@ -112,7 +112,7 @@ const SignUp = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
                 autoComplete="new-password"
               />
             </div>
@@ -129,14 +129,14 @@ const SignUp = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
+                className="w-full px-4 py-2.5 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/70 transition-all duration-150 ease-out backdrop-blur-sm"
                 autoComplete="new-password"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-xl transition-all duration-150 ease-out shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              className="w-full justify-center bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-xl transition-all duration-150 ease-out shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               loading={loading}
             >
               Create account
@@ -146,7 +146,7 @@ const SignUp = () => {
           <div className="mt-8 pt-6 border-t border-white/20">
             <p className="text-sm text-center text-white/80">
               Already have an account?{' '}
-              <Link to="/login" className="text-white hover:text-yellow-400 font-medium transition-colors duration-150">
+              <Link to="/login" className="text-white hover:text-emerald-400 font-medium transition-colors duration-150">
                 Sign in
               </Link>
             </p>
