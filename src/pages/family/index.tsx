@@ -122,7 +122,7 @@ const FamilyPage: React.FC = () => {
         </div>
         <button
           onClick={() => setShowAddFamily(true)}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-linear-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
         >
           <Plus className="w-5 h-5" />
           Add Family
@@ -195,7 +195,7 @@ const FamilyPage: React.FC = () => {
           {!searchQuery && (
             <button
               onClick={() => setShowAddFamily(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-linear-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               <Plus className="w-5 h-5" />
               Add Your First Family

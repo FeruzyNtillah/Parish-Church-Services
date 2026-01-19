@@ -36,12 +36,12 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
   };
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-card to-card/95 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 ease-out border border-border">
+    <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-card to-card/95 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 ease-out border border-border">
       {/* Animated gradient background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${getGradientClass()} opacity-30 group-hover:opacity-50 transition-opacity duration-300`} />
+      <div className={`absolute inset-0 bg-linear-to-br ${getGradientClass()} opacity-30 group-hover:opacity-50 transition-opacity duration-300`} />
       
       {/* Animated border */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${getBorderGradientClass()} opacity-0 group-hover:opacity-60 transition-opacity duration-300`} />
+      <div className={`absolute inset-0 rounded-2xl bg-linear-to-br ${getBorderGradientClass()} transition-all duration-300 group-hover:scale-[1.02]`} />
       
       {/* Selection checkbox */}
       {showSelection && (
@@ -51,6 +51,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
               type="checkbox"
               checked={isSelected}
               onChange={(e) => onSelect?.(family.id.toString(), e.target.checked)}
+              aria-label={`Select ${family.family_name}`}
               className="w-5 h-5 text-primary border-border rounded-lg focus:ring-2 focus:ring-primary/50 bg-card"
             />
             {isSelected && (
@@ -117,7 +118,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
         <div className="flex gap-3">
           <button
             onClick={() => onView(family)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-white bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <Eye className="w-4 h-4" />
             View Family
@@ -133,7 +134,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
       </div>
 
       {/* Subtle animated overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-linear-to-t from-black/20 to-transparent rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 };

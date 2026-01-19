@@ -27,7 +27,7 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
   totalFamilies,
 }) => {
   return (
-    <div className="bg-card p-6 rounded-2xl shadow-xl border border-border p-6 mb-6">
+    <div className="bg-card p-6 rounded-2xl shadow-xl border border-border mb-6">
       <div className="flex flex-col lg:flex-row gap-4 mb-4">
         <div className="flex-1">
           <div className="relative">

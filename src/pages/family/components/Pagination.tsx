@@ -125,6 +125,8 @@ export const Pagination: React.FC<PaginationProps> = ({
             max={totalPages}
             value={currentPage}
             onChange={(e) => handleJumpToPage(parseInt(e.target.value) || 1)}
+            aria-label="Go to page"
+            placeholder="Page"
             className="w-16 px-2 py-2 text-sm border border-input rounded-xl focus:ring-2 focus:ring-ring focus:border-ring bg-background text-foreground text-center transition-all duration-300"
           />
         </div>

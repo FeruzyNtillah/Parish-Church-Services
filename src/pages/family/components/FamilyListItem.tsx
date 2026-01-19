@@ -36,12 +36,12 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
   };
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl bg-card shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 ease-out border border-border">
+    <div className="group relative overflow-hidden rounded-2xl bg-linear-to-r from-card to-card/95 shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 ease-out border border-border">
       {/* Animated gradient background */}
-      <div className={`absolute inset-0 bg-gradient-to-r ${getGradientClass()} opacity-20 group-hover:opacity-40 transition-opacity duration-300`} />
+      <div className={`absolute inset-0 bg-linear-to-r ${getGradientClass()} opacity-20 group-hover:opacity-30 transition-opacity duration-300`} />
       
       {/* Animated border on hover */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${getBorderGradientClass()} opacity-0 group-hover:opacity-50 transition-opacity duration-300`} />
+      <div className={`absolute inset-0 rounded-2xl bg-linear-to-r ${getBorderGradientClass()} opacity-0 group-hover:opacity-50 transition-opacity duration-300`} />
       
       <div className="relative z-10 p-6">
         <div className="flex items-center justify-between">
@@ -53,7 +53,8 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
                   type="checkbox"
                   checked={isSelected}
                   onChange={(e) => onSelect?.(family.id.toString(), e.target.checked)}
-                  className="w-5 h-5 text-primary border-border rounded-lg focus:ring-2 focus:ring-primary/50 bg-card flex-shrink-0"
+                  aria-label={`Select ${family.family_name}`}
+                  className="w-5 h-5 text-primary border-border rounded-lg focus:ring-2 focus:ring-primary/50 bg-card shrink-0"
                 />
                 {isSelected && (
                   <div className="absolute inset-0 rounded-lg bg-primary/20 animate-pulse" />
@@ -63,7 +64,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
             
             {/* Family icon with animation */}
             <div className="relative group/icon">
-              <div className="p-3 bg-primary/10 rounded-xl border border-primary/20 group-hover/icon:bg-primary/20 transition-all duration-300 flex-shrink-0">
+              <div className="p-3 bg-primary/10 rounded-xl border border-primary/20 group-hover/icon:bg-primary/20 transition-all duration-300 shrink-0">
                 <Home className="w-5 h-5 text-primary" />
               </div>
               <Sparkles className="absolute -top-1 -right-1 w-3 h-3 text-yellow-500 animate-pulse" />
@@ -74,10 +75,10 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-xl font-bold text-foreground truncate">{family.family_name}</h3>
                 {memberCount > 5 && (
-                  <Crown className="w-5 h-5 text-yellow-500 animate-pulse flex-shrink-0" />
+                  <Crown className="w-5 h-5 text-yellow-500 animate-pulse shrink-0" />
                 )}
                 {memberCount > 15 && (
-                  <Shield className="w-5 h-5 text-purple-500 animate-pulse flex-shrink-0" />
+                  <Shield className="w-5 h-5 text-purple-500 animate-pulse shrink-0" />
                 )}
               </div>
               
@@ -86,7 +87,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
                 <div className="flex items-center gap-2">
                   <div className="relative">
                     <div className="p-1.5 bg-primary/10 rounded-lg border border-primary/20">
-                      <Users className="w-4 h-4 text-primary" />
+                      <Users className="w-5 h-5 text-primary shrink-0" />
                     </div>
                     {memberCount > 0 && (
                       <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -130,7 +131,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
           <div className="flex items-center gap-3 ml-6">
             <button
               onClick={() => onView(family)}
-              className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent"
             >
               <Eye className="w-4 h-4" />
               View Family
@@ -147,7 +148,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
       </div>
       
       {/* Subtle animated overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 };
