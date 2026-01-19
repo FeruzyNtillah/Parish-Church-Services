@@ -21,7 +21,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
       'from-orange-400/20 via-red-500/20 to-pink-600/20',
       'from-yellow-400/20 via-amber-500/20 to-orange-600/20'
     ];
-    return gradients[family.id.charCodeAt(0) % gradients.length];
+    return gradients[family.id.toString().charCodeAt(0) % gradients.length];
   };
 
   const getBorderGradientClass = () => {
@@ -32,7 +32,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
       'from-orange-500/30 via-red-500/30 to-pink-500/30',
       'from-yellow-500/30 via-amber-500/30 to-orange-500/30'
     ];
-    return borders[family.id.charCodeAt(0) % borders.length];
+    return borders[family.id.toString().charCodeAt(0) % borders.length];
   };
 
   return (
@@ -50,7 +50,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
             <input
               type="checkbox"
               checked={isSelected}
-              onChange={(e) => onSelect?.(family.id, e.target.checked)}
+              onChange={(e) => onSelect?.(family.id.toString(), e.target.checked)}
               className="w-5 h-5 text-primary border-border rounded-lg focus:ring-2 focus:ring-primary/50 bg-card"
             />
             {isSelected && (
@@ -66,13 +66,13 @@ const FamilyCard: React.FC<FamilyCardProps> = ({ family, memberCount, onView, on
         <div className="flex items-start justify-between mb-6">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-xl font-bold text-foreground">{family.familyName}</h3>
+              <h3 className="text-xl font-bold text-foreground">{family.family_name}</h3>
               {memberCount > 5 && (
                 <Crown className="w-5 h-5 text-yellow-500 animate-pulse" />
               )}
             </div>
             <p className="text-sm text-muted-foreground font-medium">
-              {family.createdAt}
+              {family.created_at}
             </p>
           </div>
           <div className="relative group/icon">

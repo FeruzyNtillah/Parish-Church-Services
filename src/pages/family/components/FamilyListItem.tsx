@@ -21,7 +21,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
       'from-orange-400/10 via-red-500/10 to-pink-600/10',
       'from-yellow-400/10 via-amber-500/10 to-orange-600/10'
     ];
-    return gradients[family.id.charCodeAt(0) % gradients.length];
+    return gradients[family.id.toString().charCodeAt(0) % gradients.length];
   };
 
   const getBorderGradientClass = () => {
@@ -32,7 +32,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
       'from-orange-500/20 via-red-500/20 to-pink-500/20',
       'from-yellow-500/20 via-amber-500/20 to-orange-500/20'
     ];
-    return borders[family.id.charCodeAt(0) % borders.length];
+    return borders[family.id.toString().charCodeAt(0) % borders.length];
   };
 
   return (
@@ -52,7 +52,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
                 <input
                   type="checkbox"
                   checked={isSelected}
-                  onChange={(e) => onSelect?.(family.id, e.target.checked)}
+                  onChange={(e) => onSelect?.(family.id.toString(), e.target.checked)}
                   className="w-5 h-5 text-primary border-border rounded-lg focus:ring-2 focus:ring-primary/50 bg-card flex-shrink-0"
                 />
                 {isSelected && (
@@ -72,7 +72,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
             {/* Family information */}
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <h3 className="text-xl font-bold text-foreground truncate">{family.familyName}</h3>
+                <h3 className="text-xl font-bold text-foreground truncate">{family.family_name}</h3>
                 {memberCount > 5 && (
                   <Crown className="w-5 h-5 text-yellow-500 animate-pulse flex-shrink-0" />
                 )}
@@ -103,7 +103,7 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
                   <div className="p-1.5 bg-primary/10 rounded-lg border border-primary/20">
                     <Calendar className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-muted-foreground font-medium">{family.createdAt}</span>
+                  <span className="text-muted-foreground font-medium">{family.created_at}</span>
                 </div>
                 
                 {/* Status badges */}

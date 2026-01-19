@@ -63,8 +63,10 @@ export const useFamilyHandlers = ({
     if (!selectedFamily) return;
     
     try {
+      // Remove the family_id placeholder and set the actual family_id
+      const { family_id, ...memberDataWithoutFamilyId } = memberData;
       const memberWithFamilyId = {
-        ...memberData,
+        ...memberDataWithoutFamilyId,
         family_id: selectedFamily.id,
       };
       await createMember(memberWithFamilyId);

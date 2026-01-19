@@ -3,3 +3,5 @@ export { useSearch } from './useSearch';
 export { useFamilyData } from '../pages/family/hooks/useFamilyData';
 export { useFamilyFilters } from '../pages/family/hooks/useFamilyFilters';
 export { useFamilies } from './useFamilies';
+export { useMembers } from './useMembers';
+export { useEvents } from './useEvents';

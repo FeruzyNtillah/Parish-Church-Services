@@ -10,6 +10,7 @@ import {
   Church,
   ChevronDown
 } from 'lucide-react';
+import { useMembers, useEvents } from '../hooks';
 import ProgressCircle from '../components/ui/ProgressCircle';
 
 const parishes = [
@@ -27,16 +28,19 @@ const parishes = [
 
 const Home = () => {
   const [selectedParish, setSelectedParish] = useState(parishes[0].id);
+  const selectedParishName = parishes.find(p => p.id === selectedParish)?.name;
+  const { loading: membersLoading, error: membersError, stats } = useMembers(selectedParishName);
+  const { events, loading: eventsLoading } = useEvents(selectedParishName);
 
   const handleParishChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedParish(Number(event.target.value));
   };
 
-  const stats = [
-    { title: 'Total Members', value: '1,250', icon: <FamilyIcon className="w-6 h-6" />, color: 'emerald' },
-    { title: 'Male Members', value: '210', icon: <MaleIcon className="w-6 h-6" />, color: 'blue' },
-    { title: 'Female Members', value: '280', icon: <FemaleIcon className="w-6 h-6" />, color: 'purple' },
-    { title: 'Children', value: '52', icon: <ChildIcon className="w-6 h-6" />, color: 'green' },
+  const statsData = [
+    { title: 'Total Members', value: stats.totalMembers.toString(), icon: <FamilyIcon className="w-6 h-6" />, color: 'emerald' },
+    { title: 'Male Members', value: stats.maleMembers.toString(), icon: <MaleIcon className="w-6 h-6" />, color: 'blue' },
+    { title: 'Female Members', value: stats.femaleMembers.toString(), icon: <FemaleIcon className="w-6 h-6" />, color: 'purple' },
+    { title: 'Children', value: stats.children.toString(), icon: <ChildIcon className="w-6 h-6" />, color: 'green' },
   ];
 
   const activities = {
@@ -45,11 +49,7 @@ const Home = () => {
       "Guest speaker this Sunday - Pastor John",
       "Building fund collection ongoing"
     ],
-    events: [
-      { id: 1, title: "Sunday Service", date: "2023-06-25", time: "10:00 AM" },
-      { id: 2, title: "Bible Study", date: "2023-06-28", time: "7:00 PM" },
-      { id: 3, title: "Youth Fellowship", date: "2023-07-01", time: "4:00 PM" }
-    ],
+    events: events.slice(0, 3), // Show first 3 events
     metrics: [
       { title: "Attendance", value: 82, description: "Weekly Average" },
       { title: "Giving", value: 65, description: "Monthly Target" },
@@ -98,28 +98,51 @@ const Home = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        {stats.map((stat, index) => {
-          const colors = getColorClasses(stat.color);
-          return (
-            <div key={index} className={`bg-card border-l-4 ${colors.border} shadow-sm rounded-lg p-6 transition-transform hover:scale-[1.02]`}>
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                    {stat.title}
-                  </p>
-                  <p className={`text-2xl font-bold ${colors.text}`}>
-                    {stat.value}
-                  </p>
-                </div>
-                <div className={`p-3 rounded-full ${colors.light} ${colors.text}`}>
-                  {stat.icon}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Church className="w-4 h-4" />
+          <span>Showing analytics for: <strong>{selectedParishName}</strong></span>
+        </div>
+      </div>
+      
+      {membersLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-card border-l-4 border-emerald-500 shadow-sm rounded-lg p-6 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      ) : membersError ? (
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6">
+          <p className="font-medium">Error loading member statistics</p>
+          <p className="text-sm mt-1">{membersError}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {statsData.map((stat, index) => {
+            const colors = getColorClasses(stat.color);
+            return (
+              <div key={index} className={`bg-card border-l-4 ${colors.border} shadow-sm rounded-lg p-6 transition-transform hover:scale-[1.02]`}>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                      {stat.title}
+                    </p>
+                    <p className={`text-2xl font-bold ${colors.text}`}>
+                      {stat.value}
+                    </p>
+                  </div>
+                  <div className={`p-3 rounded-full ${colors.light} ${colors.text}`}>
+                    {stat.icon}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Parish-Specific Content */}
       <div className="flex items-center gap-2 mb-4">
@@ -186,24 +209,35 @@ const Home = () => {
             </div>
             
             <div>
-              {activities.events.map((event) => (
-                <div
-                  key={event.id}
-                  className="p-4 border-b border-border hover:bg-muted transition-colors cursor-pointer"
-                >
-                  <p className="font-semibold text-emerald-600">
-                    {event.title}
-                  </p>
-                  <div className="flex justify-between mt-1">
-                    <p className="text-sm text-muted-foreground">
-                      {formatDate(event.date)}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {event.time}
-                    </p>
-                  </div>
+              {eventsLoading ? (
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="p-4 border-b border-gray-200 animate-pulse">
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                activities.events.map((event) => (
+                  <div
+                    key={event.id}
+                    className="p-4 border-b border-border hover:bg-muted transition-colors cursor-pointer"
+                  >
+                    <p className="font-semibold text-emerald-600">
+                      {event.title}
+                    </p>
+                    <div className="flex justify-between mt-1">
+                      <p className="text-sm text-muted-foreground">
+                        {formatDate(event.date)}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {event.time}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -223,6 +257,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };

@@ -4,9 +4,10 @@ export interface Event {
   title: string;
   date: string;
   time: string;
-  location: string;
+  location?: string;
   type: string;
-  status: 'Completed' | 'Upcoming' | 'Scheduled' | 'Planned';
+  status: "Upcoming" | "Completed" | "Scheduled" | "Planned";
+  description?: string;
 }
 
 // Database Types (matching Supabase schema)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, User, Users } from 'lucide-react';
-import type { Member } from '../../types';
+import type { Member } from '../../../types';
 
 interface AddMemberModalProps {
   isOpen: boolean;
@@ -51,20 +51,21 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({
     }
 
     const memberData: Omit<Member, 'id'> = {
-      fullName: `${formData.firstName} ${formData.middleName} ${formData.lastName}`.trim(),
-      firstName: formData.firstName,
-      middleName: formData.middleName || undefined,
-      lastName: formData.lastName,
-      dateOfBirth: formData.dateOfBirth || undefined,
+      family_id: 0, // Will be set in the handler
+      first_name: formData.firstName,
+      middle_name: formData.middleName || undefined,
+      last_name: formData.lastName,
+      date_of_birth: formData.dateOfBirth || undefined,
       relation: formData.relation || undefined,
-      baptismDate: formData.baptismDate || undefined,
-      communionDate: formData.communionDate || undefined,
-      confirmationDate: formData.confirmationDate || undefined,
-      maritalStatus: formData.maritalStatus,
-      marriageDate: formData.maritalStatus === 'married' ? formData.marriageDate : undefined,
-      spouseName: formData.maritalStatus === 'married' ? formData.spouseName : undefined,
-      phone: formData.phone || undefined,
-      gender: formData.gender || undefined
+      baptism_date: formData.baptismDate || undefined,
+      communion_date: formData.communionDate || undefined,
+      confirmation_date: formData.confirmationDate || undefined,
+      is_married: formData.maritalStatus === 'married',
+      marriage_date: formData.maritalStatus === 'married' ? formData.marriageDate : undefined,
+      spouse: formData.maritalStatus === 'married' ? formData.spouseName : undefined,
+      parish: undefined, // Will be inherited from family
+      jummuiya: undefined, // Will be inherited from family
+      created_at: new Date().toISOString()
     };
 
     onAddMember(memberData);
