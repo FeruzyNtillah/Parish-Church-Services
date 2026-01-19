@@ -84,7 +84,7 @@ const Home = () => {
           <select
             value={selectedParish}
             onChange={handleParishChange}
-            className="min-w-55 px-4 py-2 pr-10 bg-emerald-50 dark:bg-emerald-900 border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground dark:text-slate-100 parish-select"
+            className="min-w-55 px-4 py-2 pr-10 bg-emerald-500 border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground dark:text-slate-100 parish-select"
             aria-label="Select parish"
           >
             {parishes.map((parish) => (

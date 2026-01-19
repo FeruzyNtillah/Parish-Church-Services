@@ -82,24 +82,24 @@
   }
 
   .parish-select option {
-    background-color: #065f46;
+    background-color: #10b981;
     color: white;
   }
 
   .parish-select option:checked {
-    background: linear-gradient(#065f46, #065f46);
-    background-color: #065f46;
+    background: linear-gradient(#10b981, #10b981);
+    background-color: #10b981;
     color: white;
   }
 
   .dark .parish-select option {
-    background-color: #034e3b;
+    background-color: #10b981;
     color: white;
   }
 
   .dark .parish-select option:checked {
-    background: linear-gradient(#034e3b, #034e3b);
-    background-color: #034e3b;
+    background: linear-gradient(#10b981, #10b981);
+    background-color: #10b981;
     color: white;
   }
 }
