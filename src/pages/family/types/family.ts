@@ -1,6 +1,6 @@
 export const ROLE_OPTIONS = ['Father', 'Mother', 'Child', 'Guardian', 'Other'] as const;
 
-export const FAMILIES_PER_PAGE = 12;
+export const FAMILIES_PER_PAGE = 24;
 
 export const MODAL_BACKDROP_CLASS = "fixed inset-0 bg-black/70 z-40 backdrop-blur-sm";
 

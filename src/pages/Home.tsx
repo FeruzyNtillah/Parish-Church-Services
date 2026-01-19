@@ -84,7 +84,7 @@ const Home = () => {
           <select
             value={selectedParish}
             onChange={handleParishChange}
-            className="min-w-55 px-4 py-2 pr-10 bg-emerald-50 dark:bg-emerald-900 border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground dark:text-slate-100 parish-select"
+            className="min-w-55 px-4 py-2 pr-10 bg-emerald-500 border border-border rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-foreground dark:text-slate-100 parish-select"
             aria-label="Select parish"
           >
             {parishes.map((parish) => (
@@ -176,7 +176,7 @@ const Home = () => {
         {/* Events Section */}
         <div className="lg:col-span-1">
           <div className="bg-card shadow-sm rounded-lg overflow-hidden">
-            <div className="bg-emerald-100 dark:bg-emerald-700 p-4 border-b border-emerald-200 dark:border-emerald-600">
+            <div className="bg-emerald-500 p-4 border-b border-emerald-500">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5 text-emerald-600" />
                 <h3 className="text-lg font-semibold text-white">

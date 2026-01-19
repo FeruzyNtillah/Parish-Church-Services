@@ -9,16 +9,6 @@ export interface Event {
   status: 'Completed' | 'Upcoming' | 'Scheduled' | 'Planned';
 }
 
-// Donation Types
-export interface Donation {
-  id: string;
-  donorName: string;
-  amount: number;
-  date: string;
-  paymentMethod: string;
-  purpose: string;
-}
-
 // Database Types (matching Supabase schema)
 
 // Family Types
@@ -75,18 +65,6 @@ export interface MemberWithFamily extends Member {
 
 export interface FamilyWithMembers extends Family {
   members?: Member[];
-}
-
-// Sermon Types
-export interface Sermon {
-  id: number;
-  title: string;
-  speaker: string;
-  date: string;
-  duration: string;
-  category: string;
-  attendees: number;
-  thumbnail: string;
 }
 
 // Common UI Types

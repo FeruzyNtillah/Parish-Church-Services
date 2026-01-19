@@ -33,7 +33,7 @@ const Topbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
+            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'light' ? (
@@ -45,7 +45,7 @@ const Topbar = () => {
 
           {/* Notifications */}
           <button
-            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
+            className="relative p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 hover:text-white"
             aria-label="Notifications"
           >
             <Bell className="w-5 h-5" strokeWidth={2} />
@@ -54,7 +54,7 @@ const Topbar = () => {
 
           {/* Settings */}
           <button
-            className="p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 dark:hover:bg-emerald-950 hover:text-white dark:hover:text-emerald-400"
+            className="p-2.5 rounded-lg text-muted-foreground transition-all duration-200 hover:shadow-sm hover:bg-emerald-500 hover:text-white"
             aria-label="Settings"
           >
             <Settings className="w-5 h-5" strokeWidth={2} />
