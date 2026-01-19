@@ -6,13 +6,15 @@ import { useAuth } from '../contexts/AuthContext';
 import churchImage from '../assets/church.jpg';
 
 const Login = () => {
-  const { signIn } = useAuth();
+  const { signIn, resendConfirmation } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showResend, setShowResend] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
 
   const from = (location.state as { from?: string } | null)?.from ?? '/';
 
@@ -20,6 +22,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setShowResend(false);
 
     if (!email || !password) {
       setError('Email and password are required');
@@ -32,10 +35,32 @@ const Login = () => {
 
     if (error) {
       setError(error.message);
+      // Show resend option if it's an email confirmation error
+      if (error.message.includes('confirmation link') || error.message.includes('Email not confirmed')) {
+        setShowResend(true);
+      }
       return;
     }
 
     navigate(from, { replace: true });
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!email) {
+      setError('Please enter your email address first');
+      return;
+    }
+
+    setResendLoading(true);
+    const { error } = await resendConfirmation(email);
+    setResendLoading(false);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      setError('A new confirmation email has been sent. Please check your inbox.');
+      setShowResend(false);
+    }
   };
 
   return (
@@ -59,7 +84,17 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="rounded-lg bg-red-500/90 border border-red-400/50 px-4 py-3 text-sm text-white backdrop-blur-sm">
-                {error}
+                <p>{error}</p>
+                {showResend && (
+                  <button
+                    type="button"
+                    onClick={handleResendConfirmation}
+                    disabled={resendLoading}
+                    className="mt-2 text-xs underline hover:no-underline disabled:opacity-50"
+                  >
+                    {resendLoading ? 'Sending...' : 'Resend confirmation email'}
+                  </button>
+                )}
               </div>
             )}
             <div>

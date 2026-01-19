@@ -4,7 +4,7 @@ import type { Family } from '../../../types';
 type SortField = 'name' | 'members' | 'date';
 type SortOrder = 'asc' | 'desc';
 
-export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: string) => number) => {
+export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: number) => number) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<SortField>('name');
@@ -13,7 +13,7 @@ export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: 
 
   const filteredAndSortedFamilies = useMemo(() => {
     let filtered = families.filter(family =>
-      family.familyName.toLowerCase().includes(searchQuery.toLowerCase())
+      family.family_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     // Sort families
@@ -22,13 +22,13 @@ export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: 
       
       switch (sortBy) {
         case 'name':
-          comparison = a.familyName.localeCompare(b.familyName);
+          comparison = a.family_name.localeCompare(b.family_name);
           break;
         case 'members':
           comparison = getMemberCount(a.id) - getMemberCount(b.id);
           break;
         case 'date':
-          comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
           break;
       }
       

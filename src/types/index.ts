@@ -23,28 +23,32 @@ export interface Donation {
 
 // Family Types
 export interface Family {
-  id: string;
-  familyName: string;
-  createdAt: string;
+  id: number;
+  family_name: string;
+  parish?: string;
+  province?: string;
+  jummuiya?: string;
+  created_at: string;
 }
 
 // Member Types
 export interface Member {
-  id: string;
-  fullName: string;
-  phone?: string;
-  gender?: string;
-  firstName?: string;
-  middleName?: string;
-  lastName?: string;
-  dateOfBirth?: string;
+  id: number;
+  family_id: number;
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  date_of_birth?: string;
   relation?: string;
-  baptismDate?: string;
-  communionDate?: string;
-  confirmationDate?: string;
-  maritalStatus?: 'single' | 'married';
-  marriageDate?: string;
-  spouseName?: string;
+  baptism_date?: string;
+  communion_date?: string;
+  confirmation_date?: string;
+  is_married?: boolean;
+  marriage_date?: string;
+  spouse?: string;
+  parish?: string;
+  jummuiya?: string;
+  created_at: string;
 }
 
 // Profile Types (linked to auth.users)
@@ -55,11 +59,11 @@ export interface Profile {
   role: string | null;
 }
 
-// Family Member Types
+// Family Member Types (for UI convenience - not a direct Supabase table)
 export interface FamilyMember {
   id: string;
-  familyId: string;
-  memberId: string;
+  familyId: number;
+  memberId: number;
   role: string;
   addedAt: string;
 }

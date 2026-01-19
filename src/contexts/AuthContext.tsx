@@ -11,6 +11,7 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
   sendPasswordReset: (email: string) => Promise<{ error: Error | null }>;
   updatePassword: (newPassword: string) => Promise<{ error: Error | null }>;
+  resendConfirmation: (email: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -59,6 +60,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       console.error('Sign in error', error);
+      // Handle specific email confirmation error
+      if (error.message.includes('Email not confirmed')) {
+        return { error: new Error('Please check your email and click the confirmation link before signing in. If you need a new confirmation email, please sign up again.') };
+      }
       return { error: new Error(error.message) };
     }
     return { error: null };
@@ -80,7 +85,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return { error: new Error(error.message) };
     }
 
-    return { error: null };
+    // Success message for email confirmation
+    return { error: new Error('Please check your email for a confirmation link to complete your registration.') };
   }, []);
 
   const signOut = useCallback(async () => {
@@ -112,6 +118,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { error: null };
   }, []);
 
+  const resendConfirmation = useCallback(async (email: string) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+    });
+    if (error) {
+      console.error('Resend confirmation error', error);
+      return { error: new Error(error.message) };
+    }
+    return { error: null };
+  }, []);
+
   const value: AuthContextValue = useMemo(
     () => ({
       user,
@@ -122,8 +140,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       signOut,
       sendPasswordReset,
       updatePassword,
+      resendConfirmation,
     }),
-    [user, session, loading, signIn, signUp, signOut, sendPasswordReset, updatePassword],
+    [user, session, loading, signIn, signUp, signOut, sendPasswordReset, updatePassword, resendConfirmation],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Search, ChevronLeft, ChevronRight, Home } from 'lucide-react';
-import { useFamilyData, useFamilyFilters } from '../../hooks';
+import { useFamilies, useFamilyFilters } from '../../hooks';
 import { 
   FamilyCard, 
   FamilyStats, 
@@ -13,15 +13,28 @@ import type { Family, Member } from '../../types';
 const FamilyPage: React.FC = () => {
   const {
     families,
-    familyMembers,
-    membersById,
+    members,
+    loading,
+    error,
     statistics,
-    getMemberCount,
     createFamily,
     updateFamily,
-    addNewFamilyMember,
-    removeFamilyMember
-  } = useFamilyData();
+    createMember,
+    deleteMember
+  } = useFamilies();
+
+  // Helper function to get members for a family
+  const getFamilyMembers = (familyId: number) => {
+    return members.filter((m) => m.family_id === familyId);
+  };
+
+  // Create membersById map for FamilyDetailsDrawer
+  const membersById = new Map(members.map(member => [member.id.toString(), member]));
+
+  // Helper function to get member count for a family
+  const getMemberCount = (familyId: number) => {
+    return getFamilyMembers(familyId).length;
+  };
 
   const {
     searchQuery,
@@ -46,10 +59,27 @@ const FamilyPage: React.FC = () => {
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
   const [showAddMember, setShowAddMember] = useState(false);
 
+  // Get family members for selected family and convert to FamilyMember format
+  const familyMembers = selectedFamily 
+    ? getFamilyMembers(selectedFamily.id).map(member => ({
+        id: `FM${member.id}`,
+        familyId: selectedFamily.id,
+        memberId: member.id,
+        role: member.relation || 'Member',
+        addedAt: member.created_at
+      }))
+    : [];
+
   // Event handlers
-  const handleCreateFamily = () => {
+  const handleCreateFamily = async () => {
     try {
-      const newFamily = createFamily(newFamilyName);
+      const familyData = {
+        family_name: newFamilyName,
+        parish: selectedParish === 1 ? 'St. Mary' : 'Other Parish',
+        province: selectedProvince,
+        jummuiya: jummuiya || undefined
+      };
+      const newFamily = await createFamily(familyData);
       setNewFamilyName('');
       setSelectedParish(1);
       setSelectedProvince('Dar es Salaam');
@@ -62,13 +92,13 @@ const FamilyPage: React.FC = () => {
     }
   };
 
-  const handleEditFamily = (family: Family) => {
-    const newName = prompt('Edit family name', family.familyName);
+  const handleEditFamily = async (family: Family) => {
+    const newName = prompt('Edit family name', family.family_name);
     if (newName && newName.trim()) {
       try {
-        updateFamily(family.id, newName.trim());
+        await updateFamily(family.id, { family_name: newName.trim() });
         if (selectedFamily?.id === family.id) {
-          setSelectedFamily({ ...family, familyName: newName.trim() });
+          setSelectedFamily({ ...family, family_name: newName.trim() });
         }
       } catch (error) {
         alert(error instanceof Error ? error.message : 'Failed to update family');
@@ -76,20 +106,29 @@ const FamilyPage: React.FC = () => {
     }
   };
 
-  const handleAddNewMember = (memberData: Omit<Member, 'id'>) => {
+  const handleAddNewMember = async (memberData: Omit<Member, 'id'>) => {
     if (!selectedFamily) return;
     
     try {
-      addNewFamilyMember(selectedFamily.id, memberData, memberData.relation || 'Other');
+      const memberWithFamilyId = {
+        ...memberData,
+        family_id: selectedFamily.id
+      };
+      await createMember(memberWithFamilyId);
       setShowAddMember(false);
     } catch (error) {
       alert(error instanceof Error ? error.message : 'Failed to add family member');
     }
   };
 
-  const handleRemoveMember = (familyMemberId: string) => {
+  const handleRemoveMember = async (memberId: string) => {
     if (confirm('Remove member from family?')) {
-      removeFamilyMember(familyMemberId);
+      try {
+        // Convert string memberId back to number for the API
+        await deleteMember(parseInt(memberId.replace('FM', '')));
+      } catch (error) {
+        alert(error instanceof Error ? error.message : 'Failed to remove member');
+      }
     }
   };
 
@@ -153,21 +192,39 @@ const FamilyPage: React.FC = () => {
         )}
       </div>
 
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <span className="ml-2 text-muted-foreground">Loading families...</span>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-lg mb-6">
+          <p className="font-medium">Error loading families</p>
+          <p className="text-sm mt-1">{error instanceof Error ? error.message : 'An unexpected error occurred'}</p>
+        </div>
+      )}
+
       {/* Families Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
-        {paginatedFamilies.map((family: Family) => (
-          <FamilyCard
-            key={family.id}
-            family={family}
-            memberCount={getMemberCount(family.id)}
-            onView={setSelectedFamily}
-            onEdit={handleEditFamily}
-          />
-        ))}
-      </div>
+      {!loading && !error && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
+          {paginatedFamilies.map((family: Family) => (
+            <FamilyCard
+              key={family.id}
+              family={family}
+              memberCount={getMemberCount(family.id)}
+              onView={setSelectedFamily}
+              onEdit={handleEditFamily}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {!loading && !error && totalPages > 1 && (
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
             Showing {((currentPage - 1) * 12) + 1} to {Math.min(currentPage * 12, filteredAndSortedFamilies.length)} of {filteredAndSortedFamilies.length} families
@@ -199,7 +256,7 @@ const FamilyPage: React.FC = () => {
       )}
 
       {/* Empty State */}
-      {filteredAndSortedFamilies.length === 0 && (
+      {!loading && !error && filteredAndSortedFamilies.length === 0 && (
         <div className="text-center py-12">
           <Home className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No families found</h3>
