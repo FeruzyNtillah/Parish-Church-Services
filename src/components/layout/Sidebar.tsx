@@ -1,4 +1,4 @@
-import { Home, CalendarCheck, BookOpen, Heart, Users } from 'lucide-react';
+import { Home, CalendarCheck, Users } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem {
@@ -10,8 +10,6 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: 'Home', icon: Home, path: '/' },
   { label: 'Events', icon: CalendarCheck, path: '/events' },
-  { label: 'Sermons', icon: BookOpen, path: '/sermons' },
-  { label: 'Donations', icon: Heart, path: '/donations' },
   // Families nav item (icon + label) routing to /family
   { label: 'Family', icon: Users, path: '/family' },
 ];

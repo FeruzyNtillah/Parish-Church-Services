@@ -3,8 +3,6 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './components/layout/Main-layout';
 import Home from './pages/Home';
 import Events from './pages/Events';
-import Sermons from './pages/Sermons';
-import Donations from './pages/Donations';
 import Family from './pages/family';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -34,8 +32,6 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/events" element={<Events />} />
-                      <Route path="/sermons" element={<Sermons />} />
-                      <Route path="/donations" element={<Donations />} />
                       <Route path="/family" element={<Family />} />
                     </Routes>
                   </MainLayout>
