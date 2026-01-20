@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Grid, List } from 'lucide-react';
+import { Search, Grid, List, Table } from 'lucide-react';
 
 interface SearchAndFiltersProps {
   searchQuery: string;
@@ -7,8 +7,8 @@ interface SearchAndFiltersProps {
   sortBy: string;
   sortOrder: 'asc' | 'desc';
   onToggleSort: (field: 'name' | 'members' | 'date') => void;
-  viewMode: 'grid' | 'list';
-  onViewModeChange: (mode: 'grid' | 'list') => void;
+  viewMode: 'grid' | 'list' | 'table';
+  onViewModeChange: (mode: 'grid' | 'list' | 'table') => void;
   showAlphabetical: boolean;
   onAlphabeticalToggle: () => void;
   totalFamilies: number;
@@ -84,6 +84,18 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
           >
             <List className="w-4 h-4" />
             List
+          </button>
+          
+          <button
+            onClick={() => onViewModeChange('table')}
+            className={`px-4 py-3 rounded-xl border transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
+              viewMode === 'table' 
+                ? 'bg-primary/10 border-primary text-primary shadow-lg' 
+                : 'border-border hover:bg-accent text-foreground'
+            }`}
+          >
+            <Table className="w-4 h-4" />
+            Table
           </button>
           
           <button

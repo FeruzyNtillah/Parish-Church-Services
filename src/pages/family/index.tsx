@@ -27,7 +27,7 @@ const FamilyPage: React.FC = () => {
     deleteMember,
   } = useFamilies();
 
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'table'>('grid');
   const [showAlphabeticalGroups, setShowAlphabeticalGroups] = useState(false);
 
   // Helper functions

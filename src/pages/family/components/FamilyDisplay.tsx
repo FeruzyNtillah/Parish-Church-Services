@@ -1,10 +1,10 @@
 import React from 'react';
-import { FamilyCard, FamilyListItem } from './index';
+import { FamilyCard, FamilyListItem, FamilyTable } from './index';
 import type { Family } from '../../../types';
 
 interface FamilyDisplayProps {
   families: Family[];
-  viewMode: 'grid' | 'list';
+  viewMode: 'grid' | 'list' | 'table';
   showAlphabetical: boolean;
   groupedFamilies: Record<string, Family[]> | null;
   getMemberCount: (familyId: number) => number;
@@ -51,7 +51,16 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
               <h3 className="text-2xl font-bold text-foreground mb-4">
                 {letter}
               </h3>
-              {viewMode === 'grid' ? (
+              {viewMode === 'table' ? (
+                <FamilyTable
+                  families={families}
+                  getMemberCount={getMemberCount}
+                  onViewFamily={onViewFamily}
+                  onEditFamily={onEditFamily}
+                  showAlphabetical={false}
+                  groupedFamilies={null}
+                />
+              ) : viewMode === 'grid' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {families.map(renderFamily)}
                 </div>
@@ -66,7 +75,16 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
     );
   }
 
-  return viewMode === 'grid' ? (
+  return viewMode === 'table' ? (
+    <FamilyTable
+      families={families}
+      getMemberCount={getMemberCount}
+      onViewFamily={onViewFamily}
+      onEditFamily={onEditFamily}
+      showAlphabetical={false}
+      groupedFamilies={null}
+    />
+  ) : viewMode === 'grid' ? (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6">
       {families.map(renderFamily)}
     </div>
