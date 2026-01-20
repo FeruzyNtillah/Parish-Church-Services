@@ -1,6 +1,6 @@
 import React from 'react';
-import { FamilyCard, FamilyListItem, FamilyTable } from './index';
-import type { Family } from '../../../types';
+import { FamilyCard, FamilyListItem, FamilyTable } from '../index';
+import type { Family } from '../../../../types';
 
 interface FamilyDisplayProps {
   families: Family[];

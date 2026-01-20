@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home, Users, Eye, Edit2, Crown, Sparkles } from 'lucide-react';
-import type { Family } from '../../../types';
+import type { Family } from '../../../../types';
 
 interface FamilyCardProps {
   family: Family;

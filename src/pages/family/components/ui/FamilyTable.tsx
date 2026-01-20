@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home, Users, Eye, Edit2, Calendar, Crown, Sparkles, Shield, Church, MapPin, Users2 } from 'lucide-react';
-import type { Family } from '../../../types';
+import type { Family } from '../../../../types';
 
 interface FamilyTableProps {
   families: Family[];

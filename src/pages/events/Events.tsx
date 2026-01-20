@@ -10,9 +10,9 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import { useEvents } from '../hooks';
-import EventManagementModal from '../components/events/EventManagementModal';
-import type { Event } from '../types';
+import { useEvents } from '../../hooks';
+import EventManagementModal from '../../components/events/EventManagementModal';
+import type { Event } from '../../types';
 
 const Events = () => {
   const [selectedParish, setSelectedParish] = useState(1);

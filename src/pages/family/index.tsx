@@ -9,9 +9,9 @@ import {
   FamilyDetailsDrawer, 
   AddMemberModal 
 } from './components';
-import { FamilyDisplay } from './components/FamilyDisplay';
-import { Pagination } from './components/Pagination';
-import { SearchAndFilters } from './components/SearchAndFilters';
+import { FamilyDisplay } from './components/layout/FamilyDisplay';
+import { Pagination } from './components/layout/Pagination';
+import { SearchAndFilters } from './components/layout/SearchAndFilters';
 import type { Family } from '../../types';
 
 const FamilyPage: React.FC = () => {
