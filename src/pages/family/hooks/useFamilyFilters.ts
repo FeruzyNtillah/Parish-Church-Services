@@ -12,7 +12,7 @@ export const useFamilyFilters = (families: Family[], getMemberCount: (familyId: 
   const familiesPerPage = 24;
 
   const filteredAndSortedFamilies = useMemo(() => {
-    let filtered = families.filter(family =>
+    const filtered = families.filter(family =>
       family.family_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
