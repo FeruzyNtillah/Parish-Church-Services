@@ -130,14 +130,17 @@ const FamilyTable: React.FC<FamilyTableProps> = ({
         </td>
         
         <td className="px-6 py-4">
+          <button
+            onClick={() => onViewFamily(family)}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+          >
+            <Eye className="w-4 h-4" />
+            View
+          </button>
+        </td>
+        
+        <td className="px-6 py-4">
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => onViewFamily(family)}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-bold bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent hover:bg-accent rounded-lg transition-all duration-300"
-            >
-              <Eye className="w-3.5 h-3.5" />
-              View
-            </button>
             <button
               onClick={() => onEditFamily(family)}
               className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-300 border border-border"
@@ -174,6 +177,7 @@ const FamilyTable: React.FC<FamilyTableProps> = ({
                         <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Jummuiya</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Created</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">View</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
@@ -202,6 +206,7 @@ const FamilyTable: React.FC<FamilyTableProps> = ({
               <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Jummuiya</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Created</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">View</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
