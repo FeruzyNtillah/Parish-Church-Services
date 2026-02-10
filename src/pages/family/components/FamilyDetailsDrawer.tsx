@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserPlus, Trash2 } from 'lucide-react';
+import { UserPlus, Edit, Trash2 } from 'lucide-react';
 import type { Family, FamilyMember, Member } from '../../../types';
 
 interface FamilyDetailsDrawerProps {
@@ -9,6 +9,8 @@ interface FamilyDetailsDrawerProps {
   onAddMember: () => void;
   onClose: () => void;
   onRemoveMember: (memberId: string) => void;
+  onEditFamily: () => void;
+  onDeleteFamily: () => void;
   showAddMemberModal: boolean;
   children: React.ReactNode;
 }
@@ -20,6 +22,8 @@ const FamilyDetailsDrawer: React.FC<FamilyDetailsDrawerProps> = ({
   onAddMember,
   onClose,
   onRemoveMember,
+  onEditFamily,
+  onDeleteFamily,
   showAddMemberModal,
   children
 }) => {
@@ -38,6 +42,20 @@ const FamilyDetailsDrawer: React.FC<FamilyDetailsDrawerProps> = ({
             <div className="text-sm text-gray-500 dark:text-gray-400">Created: {family.created_at}</div>
           </div>
           <div className="flex items-center gap-2">
+            <button 
+              onClick={onEditFamily} 
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors"
+              title="Edit family"
+            >
+              <Edit className="w-4 h-4" /> Edit
+            </button>
+            <button 
+              onClick={onDeleteFamily} 
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 transition-colors"
+              title="Delete family"
+            >
+              <Trash2 className="w-4 h-4" /> Delete
+            </button>
             <button onClick={onAddMember} className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 transition-colors">
               <UserPlus className="w-4 h-4" /> Add Family Member
             </button>

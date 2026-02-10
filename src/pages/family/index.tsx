@@ -6,6 +6,7 @@ import { useFamilyHandlers } from './hooks/useFamilyHandlers';
 import { 
   FamilyStats, 
   AddFamilyModal, 
+  EditFamilyModal,
   FamilyDetailsDrawer, 
   AddMemberModal 
 } from './components';
@@ -23,6 +24,7 @@ const FamilyPage: React.FC = () => {
     statistics,
     createFamily,
     updateFamily,
+    deleteFamily,
     createMember,
     deleteMember,
   } = useFamilies();
@@ -57,6 +59,7 @@ const FamilyPage: React.FC = () => {
   const familyHandlers = useFamilyHandlers({
     createFamily,
     updateFamily,
+    deleteFamily,
     createMember,
     deleteMember,
   });
@@ -64,6 +67,8 @@ const FamilyPage: React.FC = () => {
   const {
     showAddFamily,
     setShowAddFamily,
+    showEditFamily,
+    setShowEditFamily,
     showAddMember,
     setShowAddMember,
     selectedFamily,
@@ -80,6 +85,8 @@ const FamilyPage: React.FC = () => {
     setDateJoined,
     handleCreateFamily,
     handleEditFamily,
+    handleUpdateFamily,
+    handleDeleteFamily,
     handleAddNewMember,
     handleRemoveMember,
   } = familyHandlers;
@@ -171,6 +178,7 @@ const FamilyPage: React.FC = () => {
         getMemberCount={getMemberCount}
         onViewFamily={setSelectedFamily}
         onEditFamily={handleEditFamily}
+        onDeleteFamily={handleDeleteFamily}
       />
 
       {/* Pagination */}
@@ -221,6 +229,22 @@ const FamilyPage: React.FC = () => {
         onSave={handleCreateFamily}
       />
 
+      {/* Edit Family Modal */}
+      <EditFamilyModal
+        isOpen={showEditFamily}
+        onClose={() => setShowEditFamily(false)}
+        family={selectedFamily}
+        familyName={newFamilyName}
+        onFamilyNameChange={setNewFamilyName}
+        selectedParish={selectedParish}
+        onParishChange={setSelectedParish}
+        selectedProvince={selectedProvince}
+        onProvinceChange={setSelectedProvince}
+        jummuiya={jummuiya}
+        onJummuiyaChange={setJummuiya}
+        onSave={handleUpdateFamily}
+      />
+
       {/* Family Details Drawer */}
       {selectedFamily && (
         <FamilyDetailsDrawer
@@ -230,6 +254,8 @@ const FamilyPage: React.FC = () => {
           onAddMember={() => setShowAddMember(true)}
           onClose={() => setSelectedFamily(null)}
           onRemoveMember={handleRemoveMember}
+          onEditFamily={() => handleEditFamily(selectedFamily)}
+          onDeleteFamily={() => handleDeleteFamily(selectedFamily)}
           showAddMemberModal={showAddMember}
         >
           <AddMemberModal

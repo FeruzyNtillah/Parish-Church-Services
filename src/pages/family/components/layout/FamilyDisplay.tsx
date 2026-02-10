@@ -10,6 +10,7 @@ interface FamilyDisplayProps {
   getMemberCount: (familyId: number) => number;
   onViewFamily: (family: Family) => void;
   onEditFamily: (family: Family) => void;
+  onDeleteFamily: (family: Family) => void;
 }
 
 export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
@@ -20,6 +21,7 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
   getMemberCount,
   onViewFamily,
   onEditFamily,
+  onDeleteFamily,
 }) => {
   const renderFamily = (family: Family) => (
     viewMode === 'grid' ? (
@@ -29,6 +31,7 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
         memberCount={getMemberCount(family.id)}
         onView={onViewFamily}
         onEdit={onEditFamily}
+        onDelete={onDeleteFamily}
       />
     ) : (
       <FamilyListItem
@@ -37,6 +40,7 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
         memberCount={getMemberCount(family.id)}
         onView={onViewFamily}
         onEdit={onEditFamily}
+        onDelete={onDeleteFamily}
       />
     )
   );
@@ -57,6 +61,7 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
                   getMemberCount={getMemberCount}
                   onViewFamily={onViewFamily}
                   onEditFamily={onEditFamily}
+                  onDeleteFamily={onDeleteFamily}
                   showAlphabetical={false}
                   groupedFamilies={null}
                 />
@@ -81,6 +86,7 @@ export const FamilyDisplay: React.FC<FamilyDisplayProps> = ({
       getMemberCount={getMemberCount}
       onViewFamily={onViewFamily}
       onEditFamily={onEditFamily}
+      onDeleteFamily={onDeleteFamily}
       showAlphabetical={false}
       groupedFamilies={null}
     />

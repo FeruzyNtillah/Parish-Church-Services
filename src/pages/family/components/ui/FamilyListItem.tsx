@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Users, Eye, Edit2, Calendar, Crown, Sparkles, Shield } from 'lucide-react';
+import { Home, Users, Eye, Edit2, Trash2, Calendar, Crown, Sparkles, Shield } from 'lucide-react';
 import type { Family } from '../../../../types';
 
 interface FamilyListItemProps {
@@ -7,12 +7,13 @@ interface FamilyListItemProps {
   memberCount: number;
   onView: (family: Family) => void;
   onEdit: (family: Family) => void;
+  onDelete: (family: Family) => void;
   isSelected?: boolean;
   onSelect?: (familyId: string, selected: boolean) => void;
   showSelection?: boolean;
 }
 
-const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, onView, onEdit, isSelected = false, onSelect, showSelection = false }) => {
+const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, onView, onEdit, onDelete, isSelected = false, onSelect, showSelection = false }) => {
   const getGradientClass = () => {
     const gradients = [
       'from-emerald-400/10 via-teal-500/10 to-cyan-600/10',
@@ -142,6 +143,13 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ family, memberCount, on
               title="Edit family"
             >
               <Edit2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => onDelete(family)}
+              className="p-2.5 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-300 hover:scale-105 border border-border"
+              title="Delete family"
+            >
+              <Trash2 className="w-4 h-4" />
             </button>
           </div>
         </div>
