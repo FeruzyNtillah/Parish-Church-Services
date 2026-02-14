@@ -1,12 +1,11 @@
 import React from 'react';
-import { Home, Users, Eye, Edit2, Trash2, Calendar, Crown, Sparkles, Shield, Church, MapPin, Users2 } from 'lucide-react';
+import { Home, Users, Eye, Trash2, Calendar, Crown, Sparkles, Shield, Church, MapPin, Users2 } from 'lucide-react';
 import type { Family } from '../../../../types';
 
 interface FamilyTableProps {
   families: Family[];
   getMemberCount: (familyId: number) => number;
   onViewFamily: (family: Family) => void;
-  onEditFamily: (family: Family) => void;
   onDeleteFamily: (family: Family) => void;
   showAlphabetical: boolean;
   groupedFamilies: Record<string, Family[]> | null;
@@ -16,7 +15,6 @@ const FamilyTable: React.FC<FamilyTableProps> = ({
   families,
   getMemberCount,
   onViewFamily,
-  onEditFamily,
   onDeleteFamily,
   showAlphabetical,
   groupedFamilies,
@@ -142,22 +140,13 @@ const FamilyTable: React.FC<FamilyTableProps> = ({
         </td>
         
         <td className="px-6 py-4">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => onEditFamily(family)}
-              className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-300 border border-border"
-              title="Edit family"
-            >
-              <Edit2 className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => onDeleteFamily(family)}
-              className="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-300 border border-border"
-              title="Delete family"
-            >
-              <Trash2 className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          <button
+            onClick={() => onDeleteFamily(family)}
+            className="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-300 border border-border"
+            title="Delete family"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+          </button>
         </td>
       </tr>
     );
