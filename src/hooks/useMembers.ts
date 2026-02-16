@@ -33,14 +33,8 @@ export const useMembers = (parishFilter?: string) => {
 
   const getMemberStats = useCallback(() => {
     const totalMembers = members.length;
-    const maleMembers = members.filter(m => 
-      m.first_name.toLowerCase().includes('male') || 
-      m.last_name.toLowerCase().includes('male')
-    ).length;
-    const femaleMembers = members.filter(m => 
-      m.first_name.toLowerCase().includes('female') || 
-      m.last_name.toLowerCase().includes('female')
-    ).length;
+    const maleMembers = members.filter(m => m.gender === 'Male').length;
+    const femaleMembers = members.filter(m => m.gender === 'Female').length;
     
     // Estimate children based on age (if date_of_birth is available)
     const children = members.filter(m => {

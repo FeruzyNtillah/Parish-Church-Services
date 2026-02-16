@@ -23,7 +23,7 @@ const Sidebar = () => {
         {/* Logo/Brand Section */}
         <div className="h-16 flex items-center justify-center px-4">
           <h1 className="text-xl font-bold bg-linear-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500 bg-clip-text text-transparent">
-            Sahili Church
+            The Catholic Church
           </h1>
         </div>
 

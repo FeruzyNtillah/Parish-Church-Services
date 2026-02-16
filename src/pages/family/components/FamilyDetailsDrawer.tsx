@@ -9,6 +9,7 @@ interface FamilyDetailsDrawerProps {
   onAddMember: () => void;
   onClose: () => void;
   onRemoveMember: (memberId: string) => void;
+  onEditMember: (member: Member) => void;
   onEditFamily: () => void;
   onDeleteFamily: () => void;
   showAddMemberModal: boolean;
@@ -22,6 +23,7 @@ const FamilyDetailsDrawer: React.FC<FamilyDetailsDrawerProps> = ({
   onAddMember,
   onClose,
   onRemoveMember,
+  onEditMember,
   onEditFamily,
   onDeleteFamily,
   showAddMemberModal,
@@ -80,6 +82,14 @@ const FamilyDetailsDrawer: React.FC<FamilyDetailsDrawerProps> = ({
                     <div className="text-sm text-gray-500 dark:text-gray-400">{fm.role}</div>
                   </div>
                   <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => m && onEditMember(m)} 
+                      className="p-2 rounded text-blue-600 dark:text-blue-400 border border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" 
+                      aria-label={`Edit ${m ? `${m.first_name} ${m.last_name}` : 'Unknown'}`} 
+                      title="Edit member"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
                     <button onClick={() => onRemoveMember(fm.id)} className="p-2 rounded text-red-600 dark:text-red-400 border border-gray-300 dark:border-gray-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" aria-label={`Remove ${m ? `${m.first_name} ${m.last_name}` : 'Unknown'} from family`} title="Remove member">
                       <Trash2 className="w-4 h-4" />
                     </button>

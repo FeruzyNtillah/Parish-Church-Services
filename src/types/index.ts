@@ -8,6 +8,7 @@ export interface Event {
   type: string;
   status: "Upcoming" | "Completed" | "Scheduled" | "Planned";
   description?: string;
+  parish?: string;
 }
 
 // Database Types (matching Supabase schema)
@@ -30,6 +31,7 @@ export interface Member {
   middle_name?: string;
   last_name: string;
   date_of_birth?: string;
+  gender?: string;
   relation?: string;
   baptism_date?: string;
   communion_date?: string;

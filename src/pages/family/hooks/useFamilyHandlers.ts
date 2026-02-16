@@ -20,6 +20,7 @@ interface UseFamilyHandlersProps {
   updateFamily: (id: number, data: any) => Promise<void>;
   deleteFamily: (id: number) => Promise<void>;
   createMember: (data: Omit<Member, 'id'>) => Promise<Member>;
+  updateMember: (id: number, data: Partial<Member>) => Promise<void>;
   deleteMember: (id: number) => Promise<void>;
   onFamilyCreated?: (family: Family) => void;
 }
@@ -29,13 +30,16 @@ export const useFamilyHandlers = ({
   updateFamily,
   deleteFamily,
   createMember,
+  updateMember,
   deleteMember,
   onFamilyCreated,
 }: UseFamilyHandlersProps) => {
   const [showAddFamily, setShowAddFamily] = useState(false);
   const [showEditFamily, setShowEditFamily] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
+  const [showEditMember, setShowEditMember] = useState(false);
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   
   const [newFamilyName, setNewFamilyName] = useState('');
   const [selectedParish, setSelectedParish] = useState(1);
@@ -101,6 +105,23 @@ export const useFamilyHandlers = ({
     }
   };
 
+  const handleEditMember = async (member: Member) => {
+    setSelectedMember(member);
+    setShowEditMember(true);
+  };
+
+  const handleUpdateMember = async (memberData: Partial<Member>) => {
+    if (!selectedMember) return;
+    
+    try {
+      await updateMember(selectedMember.id, memberData);
+      setShowEditMember(false);
+      setSelectedMember(null);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Failed to update member');
+    }
+  };
+
   const handleAddNewMember = async (memberData: Omit<Member, 'id'>) => {
     if (!selectedFamily) return;
     
@@ -144,8 +165,12 @@ export const useFamilyHandlers = ({
     setShowEditFamily,
     showAddMember,
     setShowAddMember,
+    showEditMember,
+    setShowEditMember,
     selectedFamily,
     setSelectedFamily,
+    selectedMember,
+    setSelectedMember,
     
     // Form states
     newFamilyName,
@@ -164,6 +189,8 @@ export const useFamilyHandlers = ({
     handleEditFamily,
     handleUpdateFamily,
     handleDeleteFamily,
+    handleEditMember,
+    handleUpdateMember,
     handleAddNewMember,
     handleRemoveMember,
   };

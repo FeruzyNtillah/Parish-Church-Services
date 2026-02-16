@@ -7,6 +7,7 @@ import {
   FamilyStats, 
   AddFamilyModal, 
   EditFamilyModal,
+  EditMemberModal,
   FamilyDetailsDrawer, 
   AddMemberModal 
 } from './components';
@@ -26,6 +27,7 @@ const FamilyPage: React.FC = () => {
     updateFamily,
     deleteFamily,
     createMember,
+    updateMember,
     deleteMember,
   } = useFamilies();
 
@@ -61,6 +63,7 @@ const FamilyPage: React.FC = () => {
     updateFamily,
     deleteFamily,
     createMember,
+    updateMember,
     deleteMember,
   });
 
@@ -71,8 +74,11 @@ const FamilyPage: React.FC = () => {
     setShowEditFamily,
     showAddMember,
     setShowAddMember,
+    showEditMember,
+    setShowEditMember,
     selectedFamily,
     setSelectedFamily,
+    selectedMember,
     newFamilyName,
     setNewFamilyName,
     selectedParish,
@@ -87,6 +93,8 @@ const FamilyPage: React.FC = () => {
     handleEditFamily,
     handleUpdateFamily,
     handleDeleteFamily,
+    handleEditMember,
+    handleUpdateMember,
     handleAddNewMember,
     handleRemoveMember,
   } = familyHandlers;
@@ -254,6 +262,7 @@ const FamilyPage: React.FC = () => {
           onAddMember={() => setShowAddMember(true)}
           onClose={() => setSelectedFamily(null)}
           onRemoveMember={handleRemoveMember}
+          onEditMember={handleEditMember}
           onEditFamily={() => handleEditFamily(selectedFamily)}
           onDeleteFamily={() => handleDeleteFamily(selectedFamily)}
           showAddMemberModal={showAddMember}
@@ -262,9 +271,18 @@ const FamilyPage: React.FC = () => {
             isOpen={showAddMember}
             onClose={() => setShowAddMember(false)}
             onAddMember={handleAddNewMember}
+            family={selectedFamily}
           />
         </FamilyDetailsDrawer>
       )}
+
+      {/* Edit Member Modal - Rendered separately */}
+      <EditMemberModal
+        isOpen={showEditMember}
+        onClose={() => setShowEditMember(false)}
+        onUpdateMember={handleUpdateMember}
+        member={selectedMember}
+      />
     </div>
   );
 };

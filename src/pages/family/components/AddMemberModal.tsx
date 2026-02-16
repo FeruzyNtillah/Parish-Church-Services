@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { X, User, Users } from 'lucide-react';
-import type { Member } from '../../../types';
+import type { Member, Family } from '../../../types';
 
 interface AddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddMember: (memberData: Omit<Member, 'id'>) => void;
+  family?: Family | null;
 }
 
 const AddMemberModal: React.FC<AddMemberModalProps> = ({
   isOpen,
   onClose,
-  onAddMember
+  onAddMember,
+  family
 }) => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -56,6 +58,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({
       middle_name: formData.middleName || undefined,
       last_name: formData.lastName,
       date_of_birth: formData.dateOfBirth || undefined,
+      gender: formData.gender || undefined, // Include gender field
       relation: formData.relation || undefined,
       baptism_date: formData.baptismDate || undefined,
       communion_date: formData.communionDate || undefined,
@@ -63,8 +66,8 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({
       is_married: formData.maritalStatus === 'married',
       marriage_date: formData.maritalStatus === 'married' ? formData.marriageDate : undefined,
       spouse: formData.maritalStatus === 'married' ? formData.spouseName : undefined,
-      parish: undefined, // Will be inherited from family
-      jummuiya: undefined, // Will be inherited from family
+      parish: family?.parish || undefined, // Inherit from family
+      jummuiya: family?.jummuiya || undefined, // Inherit from family
       created_at: new Date().toISOString()
     };
 

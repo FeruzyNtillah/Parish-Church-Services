@@ -144,11 +144,9 @@ const EditFamilyModal: React.FC<EditFamilyModalProps> = ({
 
       {/* Modal backdrop */}
 
-      <div className="fixed inset-0 bg-black/70 z-40 backdrop-blur-sm" onClick={onClose}></div>
-
+      <div className="fixed inset-0 bg-black/70 z-[60] backdrop-blur-sm" onClick={onClose}></div>
       
-
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex items-center justify-center z-[70] p-4">
 
         <div className="w-full max-w-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-6 rounded-lg shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700 border border-gray-200 dark:border-gray-700">
 

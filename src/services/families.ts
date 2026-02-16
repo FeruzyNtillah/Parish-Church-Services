@@ -71,8 +71,17 @@ export const familiesService = {
     return data;
   },
 
-  // Delete a family
+  // Delete a family (and all associated members)
   async delete(id: number): Promise<void> {
+    // First delete all members associated with this family
+    const { error: membersError } = await supabase
+      .from('members')
+      .delete()
+      .eq('family_id', id);
+
+    if (membersError) throw membersError;
+
+    // Then delete the family
     const { error } = await supabase
       .from('families')
       .delete()

@@ -6,12 +6,15 @@ import {
   Baby as ChildIcon,
   Volume2 as AnnouncementIcon,
   Calendar as CalendarIcon,
-  TrendingUp as GrowthIcon,
   Church,
-  ChevronDown
+  ChevronDown,
+  Edit2,
+  Save,
+  X,
+  Clock,
+  MapPin
 } from 'lucide-react';
 import { useMembers, useEvents } from '../hooks';
-import ProgressCircle from '../components/ui/ProgressCircle';
 
 const parishes = [
   { id: 1, name: "Parokia ya Bikira Maria Mama wa Rozari Takatifu - Makongo Juu" },
@@ -31,9 +34,41 @@ const Home = () => {
   const selectedParishName = parishes.find(p => p.id === selectedParish)?.name;
   const { loading: membersLoading, error: membersError, stats } = useMembers(selectedParishName);
   const { events, loading: eventsLoading } = useEvents(selectedParishName);
+  
+  // State for editable announcements
+  const [isEditingAnnouncements, setIsEditingAnnouncements] = useState(false);
+  const [announcements, setAnnouncements] = useState([
+    "Next baptism ceremony - July 15th",
+    "Guest speaker this Sunday - Pastor John",
+    "Building fund collection ongoing"
+  ]);
+  const [tempAnnouncements, setTempAnnouncements] = useState([...announcements]);
 
   const handleParishChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedParish(Number(event.target.value));
+  };
+
+  // Announcement editing functions
+  const handleEditAnnouncements = () => {
+    setTempAnnouncements([...announcements]);
+    setIsEditingAnnouncements(true);
+  };
+
+  const handleSaveAnnouncements = () => {
+    setAnnouncements([...tempAnnouncements]);
+    setIsEditingAnnouncements(false);
+    // TODO: Save to backend/database
+  };
+
+  const handleCancelEditAnnouncements = () => {
+    setTempAnnouncements([...announcements]);
+    setIsEditingAnnouncements(false);
+  };
+
+  const handleAnnouncementChange = (index: number, value: string) => {
+    const updated = [...tempAnnouncements];
+    updated[index] = value;
+    setTempAnnouncements(updated);
   };
 
   const statsData = [
@@ -44,17 +79,8 @@ const Home = () => {
   ];
 
   const activities = {
-    announcements: [
-      "Next baptism ceremony - July 15th",
-      "Guest speaker this Sunday - Pastor John",
-      "Building fund collection ongoing"
-    ],
+    announcements: announcements,
     events: events.slice(0, 3), // Show first 3 events
-    metrics: [
-      { title: "Attendance", value: 82, description: "Weekly Average" },
-      { title: "Giving", value: 65, description: "Monthly Target" },
-      { title: "Volunteering", value: 45, description: "Participation" }
-    ]
   };
 
   const formatDate = (dateString: string) => {
@@ -157,58 +183,98 @@ const Home = () => {
         {/* Announcements Section */}
         <div className="lg:col-span-2">
           <div className="bg-card shadow-sm rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-5">
-              <AnnouncementIcon className="w-5 h-5 text-emerald-600" />
-              <h3 className="text-lg font-semibold text-foreground">
-                Church Announcements
-              </h3>
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <AnnouncementIcon className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-lg font-semibold text-foreground">
+                  Church Announcements
+                </h3>
+              </div>
+              {!isEditingAnnouncements ? (
+                <button
+                  onClick={handleEditAnnouncements}
+                  className="p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
+                  title="Edit announcements"
+                >
+                  <Edit2 className="w-4 h-4" />
+                </button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleSaveAnnouncements}
+                    className="p-2 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors"
+                    title="Save announcements"
+                  >
+                    <Save className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={handleCancelEditAnnouncements}
+                    className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Cancel editing"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
             
             <div className="flex flex-col gap-4 mb-8">
-              {activities.announcements.map((text, index) => (
+              {(isEditingAnnouncements ? tempAnnouncements : activities.announcements).map((text, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <AnnouncementIcon className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <p className="text-sm text-foreground">{text}</p>
+                  {isEditingAnnouncements ? (
+                    <input
+                      type="text"
+                      value={text}
+                      onChange={(e) => handleAnnouncementChange(index, e.target.value)}
+                      className="flex-1 px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                      placeholder="Enter announcement"
+                    />
+                  ) : (
+                    <p className="text-sm text-foreground">{text}</p>
+                  )}
                 </div>
               ))}
             </div>
 
-            <div>
-              <div className="flex items-center gap-2 mb-5">
-                <GrowthIcon className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-semibold text-foreground">
-                  Monthly Growth
-                </h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {activities.metrics.map((metric, index) => (
-                  <div key={index} className="bg-card border border-border rounded-lg p-4 text-center">
-                    <p className="text-sm text-muted-foreground">
-                      {metric.title}
-                    </p>
-                    <p className="text-2xl font-bold text-foreground">
-                      {metric.value}%
-                    </p>
-                  </div>
-                ))}
+            {/* Enhanced Announcements Section */}
+            <div className="mt-8">
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <AnnouncementIcon className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-xl font-bold text-emerald-800">
+                    Community Updates
+                  </h3>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {activities.announcements.map((text, index) => (
+                    <div key={index} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm border border-emerald-100 hover:shadow-md transition-shadow">
+                      <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <AnnouncementIcon className="w-5 h-5 text-emerald-600" />
+                      </div>
+                      <p className="text-gray-700 leading-relaxed">{text}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </div> {/* This closing div was missing - closes the main announcements card */}
         </div>
 
-        {/* Events Section */}
+        {/* Enhanced Events Section */}
         <div className="lg:col-span-1">
-          <div className="bg-card shadow-sm rounded-lg overflow-hidden">
-            <div className="bg-emerald-500 p-4 border-b border-emerald-500">
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg rounded-xl overflow-hidden">
+            <div className="bg-emerald-600 p-4 border-b border-emerald-700">
               <div className="flex items-center gap-2">
-                <CalendarIcon className="w-5 h-5 text-emerald-600" />
+                <CalendarIcon className="w-5 h-5 text-emerald-100" />
                 <h3 className="text-lg font-semibold text-white">
                   Upcoming Events
                 </h3>
               </div>
             </div>
             
-            <div>
+            <div className="bg-white p-4">
               {eventsLoading ? (
                 <div className="space-y-3">
                   {[1, 2, 3].map((i) => (
@@ -219,46 +285,47 @@ const Home = () => {
                   ))}
                 </div>
               ) : (
-                activities.events.map((event) => (
-                  <div
-                    key={event.id}
-                    className="p-4 border-b border-border hover:bg-muted transition-colors cursor-pointer"
-                  >
-                    <p className="font-semibold text-emerald-600">
-                      {event.title}
-                    </p>
-                    <div className="flex justify-between mt-1">
-                      <p className="text-sm text-muted-foreground">
-                        {formatDate(event.date)}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {event.time}
-                      </p>
+                <div className="space-y-3">
+                  {activities.events.map((event) => (
+                    <div
+                      key={event.id}
+                      className="group p-4 border-b border-gray-100 hover:bg-emerald-50 transition-colors cursor-pointer rounded-lg"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-emerald-700 group-hover:text-emerald-800 transition-colors">
+                            {event.title}
+                          </h4>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full">
+                              <CalendarIcon className="w-3 h-3" />
+                              {formatDate(event.date)}
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                              <Clock className="w-3 h-3" />
+                              {event.time}
+                            </span>
+                            {event.location && (
+                              <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">
+                                <MapPin className="w-3 h-3" />
+                                {event.location}
+                              </span>
+                            )}
+                          </div>
+                          {event.description && (
+                            <p className="text-gray-600 text-sm mt-2 line-clamp-2">{event.description}</p>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+                </div>
               )}
             </div>
           </div>
         </div>
-
-        {/* Progress Metrics */}
-        {activities.metrics.map((metric, index) => (
-          <div key={index} className="bg-card shadow-sm rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">
-              {metric.title} Progress
-            </h3>
-            <div className="flex flex-col items-center">
-              <ProgressCircle size={100} progress={metric.value / 100} />
-              <p className="text-lg font-semibold text-emerald-600 mt-2">
-                {metric.value}% {metric.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-    </div>
+      </div> {/* This closes the main grid div */}
+    </div> /* This closes the main container div */
   );
 };
 
