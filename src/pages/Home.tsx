@@ -4,6 +4,7 @@ import {
   User as MaleIcon,
   UserPlus as FemaleIcon,
   Baby as ChildIcon,
+  Home as TotalFamiliesIcon,
   Volume2 as AnnouncementIcon,
   Calendar as CalendarIcon,
   Church,
@@ -14,7 +15,7 @@ import {
   Clock,
   MapPin
 } from 'lucide-react';
-import { useMembers, useEvents } from '../hooks';
+import { useMembers, useEvents, useFamilies } from '../hooks';
 
 const parishes = [
   { id: 1, name: "Parokia ya Bikira Maria Mama wa Rozari Takatifu - Makongo Juu" },
@@ -34,6 +35,7 @@ const Home = () => {
   const selectedParishName = parishes.find(p => p.id === selectedParish)?.name;
   const { loading: membersLoading, error: membersError, stats } = useMembers(selectedParishName);
   const { events, loading: eventsLoading } = useEvents(selectedParishName);
+  const { statistics: familyStats, loading: familiesLoading } = useFamilies(selectedParishName);
   
   // State for editable announcements
   const [isEditingAnnouncements, setIsEditingAnnouncements] = useState(false);
@@ -73,8 +75,9 @@ const Home = () => {
 
   const statsData = [
     { title: 'Total Members', value: stats.totalMembers.toString(), icon: <FamilyIcon className="w-6 h-6" />, color: 'emerald' },
-    { title: 'Male Members', value: stats.maleMembers.toString(), icon: <MaleIcon className="w-6 h-6" />, color: 'blue' },
-    { title: 'Female Members', value: stats.femaleMembers.toString(), icon: <FemaleIcon className="w-6 h-6" />, color: 'purple' },
+    { title: 'Total Families', value: familyStats.totalFamilies.toString(), icon: <TotalFamiliesIcon className="w-6 h-6" />, color: 'blue' },
+    { title: 'Male Members', value: stats.maleMembers.toString(), icon: <MaleIcon className="w-6 h-6" />, color: 'purple' },
+    { title: 'Female Members', value: stats.femaleMembers.toString(), icon: <FemaleIcon className="w-6 h-6" />, color: 'pink' },
     { title: 'Children', value: stats.children.toString(), icon: <ChildIcon className="w-6 h-6" />, color: 'green' },
   ];
 
@@ -93,6 +96,7 @@ const Home = () => {
       emerald: { bg: 'bg-emerald-500', text: 'text-emerald-600', border: 'border-emerald-500', light: 'bg-emerald-50' },
       blue: { bg: 'bg-blue-500', text: 'text-blue-600', border: 'border-blue-500', light: 'bg-blue-50' },
       purple: { bg: 'bg-purple-500', text: 'text-purple-600', border: 'border-purple-500', light: 'bg-purple-50' },
+      pink: { bg: 'bg-pink-500', text: 'text-pink-600', border: 'border-pink-500', light: 'bg-pink-50' },
       green: { bg: 'bg-green-500', text: 'text-green-600', border: 'border-green-500', light: 'bg-green-50' },
     };
     return colorMap[color] || colorMap.emerald;
@@ -132,8 +136,8 @@ const Home = () => {
       </div>
       
       {membersLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
+          {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="bg-card border-l-4 border-emerald-500 shadow-sm rounded-lg p-6 animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
               <div className="h-8 bg-gray-200 rounded w-1/2"></div>

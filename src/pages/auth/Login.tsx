@@ -29,14 +29,18 @@ const Login = () => {
       return;
     }
 
-    const { error } = await signIn(email, password);
+    const { error, timeout } = await signIn(email, password);
     setLoading(false);
 
     if (error) {
-      setError(error.message);
-      // Show resend option if it's an email confirmation error
-      if (error.message.includes('confirmation link') || error.message.includes('Email not confirmed')) {
-        setShowResend(true);
+      if (timeout) {
+        setError('Login timed out. Please check your internet connection and try again.');
+      } else {
+        setError(error.message);
+        // Show resend option if it's an email confirmation error
+        if (error.message.includes('confirmation link') || error.message.includes('Email not confirmed')) {
+          setShowResend(true);
+        }
       }
       return;
     }
@@ -74,7 +78,7 @@ const Login = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight drop-shadow-lg">Welcome back</h1>
             <p className="text-white/90 text-lg leading-relaxed drop-shadow-md">
-              Sign in to access the Parish Dashboard
+              Sign in to access The Catholic Church Dashboard
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">

@@ -58,7 +58,7 @@ const SignUp = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight drop-shadow-lg">Create an account</h1>
             <p className="text-white/90 text-lg leading-relaxed drop-shadow-md">
-              Sign up to access the Parish Dashboard.
+              Sign up to access The Catholic Church Dashboard.
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">

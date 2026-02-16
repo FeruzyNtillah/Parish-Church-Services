@@ -41,7 +41,7 @@ export const useMembers = (parishFilter?: string) => {
       if (!m.date_of_birth) return false;
       const birthYear = new Date(m.date_of_birth).getFullYear();
       const currentYear = new Date().getFullYear();
-      return currentYear - birthYear < 18;
+      return currentYear - birthYear < 15;  // Under 15 years old
     }).length;
 
     return {

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { familiesService, membersService } from '../services';
 import type { Family, Member, FamilyWithMembers } from '../types';
 
-export const useFamilies = () => {
+export const useFamilies = (parishFilter?: string) => {
   const [families, setFamilies] = useState<Family[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,13 @@ export const useFamilies = () => {
         familiesService.getAll(),
         membersService.getAll(),
       ]);
-      setFamilies(familiesData);
+      
+      // Filter by parish if provided
+      const filteredFamilies = parishFilter 
+        ? familiesData.filter(family => family.parish === parishFilter)
+        : familiesData;
+      
+      setFamilies(filteredFamilies);
       setMembers(membersData);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to load data'));
@@ -25,7 +31,7 @@ export const useFamilies = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [parishFilter]);
 
   useEffect(() => {
     loadData();

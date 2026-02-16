@@ -6,7 +6,7 @@ interface AuthContextValue {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null; timeout?: boolean }>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   sendPasswordReset: (email: string) => Promise<{ error: Error | null }>;
@@ -57,16 +57,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
+    try {
+      // Add timeout promise to handle slow connections
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Login timed out. Please check your internet connection and try again.')), 15000); // 15 seconds timeout
+      });
+
+      const signInPromise = supabase.auth.signInWithPassword({ email, password });
+      
+      const result = await Promise.race([signInPromise, timeoutPromise]);
+      return { error: result.error || null };
+    } catch (error: any) {
+      if (error.message === 'Login timed out. Please check your internet connection and try again.') {
+        return { error, timeout: true };
+      }
       console.error('Sign in error', error);
       // Handle specific email confirmation error
       if (error.message.includes('Email not confirmed')) {
-        return { error: new Error('Please check your email and click the confirmation link before signing in. If you need a new confirmation email, please sign up again.') };
+        return { error: new Error('Please check your email and click on confirmation link before signing in. If you need a new confirmation email, please sign up again.') };
       }
       return { error: new Error(error.message) };
     }
-    return { error: null };
   }, []);
 
   const signUp = useCallback(async (email: string, password: string, fullName?: string) => {
