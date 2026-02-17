@@ -101,8 +101,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signOut = useCallback(async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
+    try {
+      // Add timeout promise to handle slow connections
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Logout timed out. Please check your internet connection and try again.')), 15000); // 15 seconds timeout
+      });
+
+      const signOutPromise = supabase.auth.signOut();
+      
+      await Promise.race([signOutPromise, timeoutPromise]);
+    } catch (error: any) {
       console.error('Sign out error', error);
       throw error;
     }
