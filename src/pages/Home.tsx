@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { 
+import {
   Users as FamilyIcon,
   User as MaleIcon,
   UserPlus as FemaleIcon,
@@ -35,8 +35,8 @@ const Home = () => {
   const selectedParishName = parishes.find(p => p.id === selectedParish)?.name;
   const { loading: membersLoading, error: membersError, stats } = useMembers(selectedParishName);
   const { events, loading: eventsLoading } = useEvents(selectedParishName);
-  const { statistics: familyStats, loading: familiesLoading } = useFamilies(selectedParishName);
-  
+  const { statistics: familyStats } = useFamilies(selectedParishName);
+
   // State for editable announcements
   const [isEditingAnnouncements, setIsEditingAnnouncements] = useState(false);
   const [announcements, setAnnouncements] = useState([
@@ -109,7 +109,7 @@ const Home = () => {
         <h1 className="text-3xl font-bold text-foreground">
           Parish Dashboard
         </h1>
-        
+
         <div className="relative">
           <select
             value={selectedParish}
@@ -134,7 +134,7 @@ const Home = () => {
           <span>Showing analytics for: <strong>{selectedParishName}</strong></span>
         </div>
       </div>
-      
+
       {membersLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -221,7 +221,7 @@ const Home = () => {
                 </div>
               )}
             </div>
-            
+
             <div className="flex flex-col gap-4 mb-8">
               {(isEditingAnnouncements ? tempAnnouncements : activities.announcements).map((text, index) => (
                 <div key={index} className="flex items-center gap-3">
@@ -250,7 +250,7 @@ const Home = () => {
                     Community Updates
                   </h3>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {activities.announcements.map((text, index) => (
                     <div key={index} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm border border-emerald-100 hover:shadow-md transition-shadow">
@@ -277,7 +277,7 @@ const Home = () => {
                 </h3>
               </div>
             </div>
-            
+
             <div className="bg-white p-4">
               {eventsLoading ? (
                 <div className="space-y-3">
